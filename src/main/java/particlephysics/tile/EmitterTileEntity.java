@@ -1,5 +1,6 @@
 package particlephysics.tile;
 
+import minechem.api.core.EnumMolecule;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
