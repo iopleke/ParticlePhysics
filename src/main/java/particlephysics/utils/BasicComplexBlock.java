@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import particlephysics.ClientProxy;
+import particlephysics.ModParticlePhysics;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -182,7 +183,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println("Error while creating tile entity");
+        ModParticlePhysics.LOGGER.severe("Error while creating tile entity");
         return null;
 
     }

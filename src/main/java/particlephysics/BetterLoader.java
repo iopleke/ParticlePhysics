@@ -12,7 +12,6 @@ import particlephysics.blocks.SeriesReceptor;
 import particlephysics.utils.IBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-
 public class BetterLoader
 {
 
@@ -21,17 +20,11 @@ public class BetterLoader
 
     public void populateClasses()
     {
-
         classes.add(Emitter.class);
-
         classes.add(InfiniteEmitter.class);
-
         classes.add(PolarizedGlass.class);
-
         classes.add(SeriesReceptor.class);
-
         classes.add(ControlGlass.class);
-
     }
 
     public void loadBlocks()
@@ -74,7 +67,8 @@ public class BetterLoader
                 return currentBlock;
             }
         }
-        System.out.println("Failed to find block in BetterLoader. Crash incoming.");
+        
+        ModParticlePhysics.LOGGER.severe("Failed to find block in BetterLoader. Crash incoming.");
         return null;
     }
 
@@ -99,7 +93,7 @@ public class BetterLoader
                 }
                 currentIBlock.addRecipe();
 
-                GameRegistry.registerTileEntity(currentIBlock.getTileEntityClass(), currentIBlock.getName() + "Minechem Tile Entity");
+                GameRegistry.registerTileEntity(currentIBlock.getTileEntityClass(), currentIBlock.getName() + "Particle Physics Tile Entity");
             }
 
         }

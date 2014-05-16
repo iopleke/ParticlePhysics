@@ -15,7 +15,8 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid = ModParticlePhysics.ID, name = ModParticlePhysics.NAME, version = "5.0.3", useMetadata = false, acceptedMinecraftVersions = "[1.6.4,)", dependencies = "required-after:Forge@[9.11.1.953,);after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { ModParticlePhysics.CHANNEL_NAME }, packetHandler = PacketHandler.class)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels =
+{ ModParticlePhysics.CHANNEL_NAME }, packetHandler = PacketHandler.class)
 public class ModParticlePhysics
 {
     /** Internal mod name used for reference purposes and resource gathering. **/
@@ -29,7 +30,7 @@ public class ModParticlePhysics
 
     /** Reference to how many ticks make up a second in Minecraft. **/
     public static final int SECOND_IN_TICKS = 20;
-    
+
     /** Provides standard logging from the Forge. **/
     public static Logger LOGGER;
 
@@ -37,16 +38,9 @@ public class ModParticlePhysics
     public static BetterLoader LOADER;
 
     public static ParticlePhysicsTab CREATIVE_TAB = new ParticlePhysicsTab();
-    
+
     /** Provides standardized configuration file offered by the Forge. **/
     private static Configuration CONFIG;
-
-    // public final static Item potentialReader = new PotentialReader(24567);
-
-    public void loadBlocks()
-    {
-
-    }
 
     // The instance of your mod that Forge uses.
     @Instance(value = CHANNEL_NAME)
@@ -71,24 +65,31 @@ public class ModParticlePhysics
         CONFIG = new Configuration(event.getSuggestedConfigurationFile());
         Settings.load(CONFIG);
 
+        LOGGER.info("Populating Particle List...");
         ParticleRegistry.populateParticleList();
 
+        LOGGER.info("Creating Better Loader instance...");
         LOADER = new BetterLoader();
         LOADER.loadBlocks();
-        loadBlocks();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+        LOGGER.info("Registering custom renderers...");
         PROXY.registerRenderers();
 
+        LOGGER.info("Starting BetterLoader mainLoad()...");
         LOADER.mainload();
-        PROXY.init();
 
+        LOGGER.info("Creating NetworkRegistry...");
         NetworkRegistry networkRegistry = NetworkRegistry.instance();
+
+        LOGGER.info("Registering all Entities...");
         ParticleRegistry.registerEntities();
 
-        new GuiHandler();
+        LOGGER.info("Creating Custom GUI Handler...");
+        networkRegistry.registerGuiHandler(this, new GuiHandler());
+        
     }
 }

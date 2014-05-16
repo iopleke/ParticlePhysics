@@ -42,13 +42,15 @@ public class Settings
     {
         return idManager.getNextItemID();
     }
-    
+
     // -----
     // ITEMS
     // -----
-    
-    public static @CfgId int Element = getNextItemID();
-    public static @CfgId int Molecule = getNextItemID();
+
+    public static @CfgId
+    int Element = getNextItemID();
+    public static @CfgId
+    int Molecule = getNextItemID();
 
     // ------
     // BLOCKS

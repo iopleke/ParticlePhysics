@@ -34,13 +34,9 @@ public class ParticleRegistry
         particles.add(SandParticle.class);
         particles.add(SeedParticle.class);
         particles.add(SplitParticle.class);
-
         particles.add(CharcoalParticle.class);
-
         particles.add(GlassParticle.class);
-
         particles.add(PaperParticle.class);
-
         particles.add(BlankParticle.class);
         particles.add(GunpowderParticle.class);
         particles.add(BlazepowderParticle.class);
