@@ -1,5 +1,6 @@
 package particlephysics.tile;
 
+import minechem.api.core.EnumElement;
 import minechem.api.core.EnumMolecule;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
+import particlephysics.Settings;
 import particlephysics.api.BaseParticle;
 import particlephysics.blocks.InfiniteEmitter;
 import particlephysics.entity.BlazepowderParticle;
@@ -33,18 +35,6 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     public int fuelMeta;
     public int fuelStored = 0;
 
-    public int getMaxFuelFromItems()
-    {
-        if (this.inventory[0] != null && this.inventory[0].getItem() instanceof ItemMolecule)
-        {
-            return 100 * ItemMolecule.getMolecule(this.inventory[0]).getSize();
-        }
-        else
-        {
-            return 100;
-        }
-    }
-
     @Override
     public void updateEntity()
     {
@@ -57,7 +47,8 @@ public class EmitterTileEntity extends TileEntity implements IInventory
                     if (this.inventory[0] != null && isValidFuel(this.inventory[0].itemID))
                     {
 
-                        this.fuelStored = this.getMaxFuelFromItems();
+                        // TODO: Get fuel amount from ItemMolecule.getSize() * 100;
+                        this.fuelStored = 100;
 
                         this.fuelType = this.inventory[0].itemID;
                         this.fuelMeta = this.inventory[0].getItemDamage();
@@ -105,7 +96,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
     public BaseParticle getParticleFromFuel(int fuel, int meta)
     {
-        if (fuel == MinechemItems.element.itemID)
+        if (fuel == Settings.Element)
         {
             if (meta == EnumElement.C.ordinal())
             {
@@ -134,7 +125,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
         }
 
-        if (fuel == MinechemItems.molecule.itemID)
+        if (fuel == Settings.Molecule)
         {
             if (meta == EnumMolecule.cellulose.ordinal())
             {
@@ -300,7 +291,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
     public boolean isValidFuel(int itemstack)
     {
-        return (itemstack == MinechemItems.molecule.itemID || itemstack == MinechemItems.element.itemID);
+        return (itemstack == Settings.Molecule || itemstack == Settings.Element);
     }
 
     public void receiveButton(byte type, byte value)

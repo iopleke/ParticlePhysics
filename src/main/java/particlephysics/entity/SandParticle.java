@@ -3,7 +3,7 @@ package particlephysics.entity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import particlephysics.api.BaseParticle;
-import particlephysics.helper.CoordTuple;
+import particlephysics.utils.CoordTuple;
 
 public class SandParticle extends BaseParticle
 {

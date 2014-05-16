@@ -13,10 +13,10 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
+import particlephysics.ParticleRegistry;
 import particlephysics.api.BaseParticle;
 import particlephysics.entity.LeafParticle;
-import particlephysics.helper.ParticleRegistry;
-import particlephysics.helper.Vector3;
+import particlephysics.utils.Vector3;
 
 public class RenderParticle extends Render
 {

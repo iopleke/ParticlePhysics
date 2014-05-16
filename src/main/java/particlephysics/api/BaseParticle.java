@@ -18,7 +18,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import particlephysics.helper.ParticleRegistry;
+import particlephysics.ParticleRegistry;
 import particlephysics.render.BlockRenderInfo;
 import cpw.mods.fml.common.network.PacketDispatcher;
 

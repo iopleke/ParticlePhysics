@@ -2,7 +2,7 @@ package particlephysics.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import particlephysics.ParticlePhysics;
+import particlephysics.ModParticlePhysics;
 import particlephysics.tile.EmitterTileEntity;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -12,7 +12,7 @@ public class GuiHandler implements IGuiHandler
 
     public GuiHandler()
     {
-        NetworkRegistry.instance().registerGuiHandler(ParticlePhysics.instance, this);
+        NetworkRegistry.instance().registerGuiHandler(ModParticlePhysics.INSTANCE, this);
     }
 
     @Override

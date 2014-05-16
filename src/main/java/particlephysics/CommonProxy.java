@@ -1,4 +1,4 @@
-package particlephysics.helper;
+package particlephysics;
 
 public class CommonProxy
 {

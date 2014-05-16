@@ -1,4 +1,4 @@
-package particlephysics.helper;
+package particlephysics.utils;
 
 import net.minecraft.tileentity.TileEntity;
 

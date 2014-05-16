@@ -1,4 +1,4 @@
-package particlephysics.helper;
+package particlephysics;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -1,11 +1,10 @@
-package particlephysics.helper;
+package particlephysics;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
-import particlephysics.ParticlePhysics;
 import particlephysics.api.BaseParticle;
 import particlephysics.entity.BlankParticle;
 import particlephysics.entity.BlazepowderParticle;
@@ -55,7 +54,7 @@ public class ParticleRegistry
 
         for (int i = 0; i < particles.size(); i++)
         {
-            icons.put(particles.get(i), register.registerIcon("minechem:" + particles.get(i).getName().substring("pixlepix.minechem.particlephysics.entity.".length())));
+            icons.put(particles.get(i), register.registerIcon(ModParticlePhysics.ID + ":" + particles.get(i).getName().substring("particlephysics.entity.".length())));
         }
 
     }
@@ -79,7 +78,7 @@ public class ParticleRegistry
         {
             try
             {
-                EntityRegistry.registerModEntity(particles.get(i), particles.get(i).getName(), i, ParticlePhysics.instance, 80, 1, true);
+                EntityRegistry.registerModEntity(particles.get(i), particles.get(i).getName(), i, ModParticlePhysics.INSTANCE, 80, 1, true);
 
             }
             catch (SecurityException e)

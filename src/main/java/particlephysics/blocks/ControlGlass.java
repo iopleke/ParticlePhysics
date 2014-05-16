@@ -10,9 +10,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import particlephysics.Settings;
 import particlephysics.api.BaseParticle;
 import particlephysics.api.IParticleBouncer;
-import particlephysics.helper.BasicComplexBlock;
+import particlephysics.utils.BasicComplexBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ControlGlass extends BasicComplexBlock implements IParticleBouncer
@@ -20,7 +21,7 @@ public class ControlGlass extends BasicComplexBlock implements IParticleBouncer
 
     public ControlGlass()
     {
-        super(MinechemBlocks.controlGlassID);
+        super(Settings.ControlGlass);
     }
 
     public ControlGlass(int i)

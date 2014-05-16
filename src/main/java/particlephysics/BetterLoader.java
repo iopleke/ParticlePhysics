@@ -1,17 +1,17 @@
-package particlephysics.helper;
+package particlephysics;
 
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
-import particlephysics.ParticlePhysics;
 import particlephysics.blocks.ControlGlass;
 import particlephysics.blocks.Emitter;
 import particlephysics.blocks.InfiniteEmitter;
 import particlephysics.blocks.PolarizedGlass;
 import particlephysics.blocks.SeriesReceptor;
+import particlephysics.utils.IBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
+
 
 public class BetterLoader
 {
@@ -49,7 +49,7 @@ public class BetterLoader
                 Block newBlock = ((Block) clazz.newInstance()).setHardness(0.5F).setStepSound(Block.soundAnvilFootstep);
                 if (((IBlock) newBlock).inCreativeTab())
                 {
-                    newBlock.setCreativeTab(ParticlePhysics.creativeTab);
+                    newBlock.setCreativeTab(ModParticlePhysics.CREATIVE_TAB);
                 }
                 blocks.add(newBlock);
 
@@ -88,7 +88,6 @@ public class BetterLoader
             if (currentBlock instanceof IBlock)
             {
                 IBlock currentIBlock = (IBlock) currentBlock;
-                LanguageRegistry.addName(currentBlock, currentIBlock.getName());
                 MinecraftForge.setBlockHarvestLevel(currentBlock, "pickaxe", 0);
                 if (currentIBlock.getItemBlock() != null)
                 {

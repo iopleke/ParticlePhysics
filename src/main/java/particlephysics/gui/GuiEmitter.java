@@ -9,9 +9,9 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
+import particlephysics.PacketHandler;
+import particlephysics.ParticleRegistry;
 import particlephysics.api.BaseParticle;
-import particlephysics.helper.PacketHandler;
-import particlephysics.helper.ParticleRegistry;
 import particlephysics.tile.EmitterTileEntity;
 
 // Thanks to VSWE for assorted bits of the code
@@ -42,7 +42,8 @@ public class GuiEmitter extends GuiContainer
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
         // Higher limit on the bar for molecules
-        float filled = tile.fuelStored / ((float) tile.getMaxFuelFromItems());
+        // TODO: Get proper fuel amount from items.
+        float filled = tile.fuelStored / 100;
         int barHeight = (int) (filled * 29);
         if (barHeight > 0)
         {

@@ -1,4 +1,4 @@
-package particlephysics.helper;
+package particlephysics;
 
 import net.minecraft.util.Icon;
 import particlephysics.api.BaseParticle;

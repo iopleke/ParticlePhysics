@@ -1,4 +1,4 @@
-package particlephysics.helper;
+package particlephysics;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;

@@ -10,8 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import particlephysics.Settings;
 import particlephysics.api.BaseParticle;
-import particlephysics.helper.BasicComplexBlock;
+import particlephysics.utils.BasicComplexBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class PolarizedGlass extends BasicComplexBlock
@@ -19,7 +20,7 @@ public class PolarizedGlass extends BasicComplexBlock
 
     public PolarizedGlass()
     {
-        super(MinechemBlocks.polarizedGlassID);
+        super(Settings.PolarizedGlass);
     }
 
     @Override
