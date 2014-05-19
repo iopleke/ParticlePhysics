@@ -78,7 +78,7 @@ public class InfiniteEmitter extends BasicComplexBlock
     @Override
     public String getName()
     {
-        return "Infinite Emitter";
+        return "InfiniteEmitter";
     }
 
     @Override

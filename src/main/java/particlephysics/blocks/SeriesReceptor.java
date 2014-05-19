@@ -65,7 +65,7 @@ public class SeriesReceptor extends BasicComplexBlock
     @Override
     public String getName()
     {
-        return "Series Receptor";
+        return "SeriesReceptor";
     }
 
     @Override

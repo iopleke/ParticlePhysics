@@ -3,3 +3,8 @@ language.name=English
 language.region=UK
 language.code=en_GB
 
+tile.Emitter.name=Emitter
+tile.PolarizedGlass.name=Polarized Glass
+tile.SeriesReceptor.name=Series Receptor
+tile.ControlGlass.name=Control Glass
+tile.InfiniteEmitter.name=Infinite Emitter

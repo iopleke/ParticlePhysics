@@ -50,7 +50,8 @@ public class ParticleRegistry
 
         for (int i = 0; i < particles.size(); i++)
         {
-            icons.put(particles.get(i), register.registerIcon(ModParticlePhysics.ID + ":" + particles.get(i).getName().substring("particlephysics.entity.".length())));
+            Icon particleIcon = register.registerIcon(ModParticlePhysics.ID + ":" + particles.get(i).getName().substring("particlephysics.entity.".length()));
+            icons.put(particles.get(i), particleIcon);
         }
 
     }

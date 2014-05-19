@@ -92,7 +92,7 @@ public class ControlGlass extends BasicComplexBlock implements IParticleBouncer
     @Override
     public String getName()
     {
-        return "Control Glass";
+        return "ControlGlass";
     }
 
     @Override

@@ -85,7 +85,7 @@ public class PolarizedGlass extends BasicComplexBlock
     @Override
     public String getName()
     {
-        return "Polarized Glass";
+        return "PolarizedGlass";
     }
 
     @Override
