@@ -16,7 +16,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = ModParticlePhysics.ID, name = ModParticlePhysics.NAME, version = ModParticlePhysics.VERSION, useMetadata = false, acceptedMinecraftVersions = "[1.6.4,)", dependencies = "required-after:Forge@[9.11.1.953,);after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
+@Mod(modid = ModParticlePhysics.ID, name = ModParticlePhysics.NAME, version = ModParticlePhysics.VERSION_FULL, useMetadata = false, acceptedMinecraftVersions = "[1.6.4,)", dependencies = "required-after:Forge@[9.11.1.953,);after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels =
 { ModParticlePhysics.CHANNEL_NAME }, packetHandler = PacketHandler.class)
 public class ModParticlePhysics
@@ -27,8 +27,12 @@ public class ModParticlePhysics
     /** Network name that is used in the NetworkMod. **/
     public static final String CHANNEL_NAME = ID;
     
-    /** Publicly displayed version number in mod list that should match jar file. **/
-    public static final String VERSION = "5.0.4";
+    /** Main version information that will be displayed in mod listing and for other purposes. **/
+    public static final String V_MAJOR = "@MAJOR@";
+    public static final String V_MINOR = "@MINOR@";
+    public static final String V_REVIS = "@REVIS@";
+    public static final String V_BUILD = "@BUILD@";
+    public static final String VERSION_FULL = V_MAJOR + "." + V_MINOR + V_REVIS + "." + V_BUILD;
 
     /** User friendly version of our mods name. **/
     public static final String NAME = "Particle Physics";
@@ -80,7 +84,7 @@ public class ModParticlePhysics
         metadata.description = ModParticlePhysics.NAME + " a mod that lets you mess around and have fun to create a unique power plant.";
         metadata.url = "https://github.com/jakimfett/ParticlePhysics";
         metadata.logoFile = "assets/" + ModParticlePhysics.ID + "/logo.png";
-        metadata.version = ModParticlePhysics.VERSION;
+        metadata.version = V_MAJOR + "." + V_MINOR + V_REVIS;
         metadata.authorList = Arrays.asList(new String[]
         { "pixlepix", "jakimfett", "maxwolf" });
         metadata.credits = "View a full list of contributors on our Github repo!";
