@@ -1,0 +1,10 @@
+itemGroup.tabParticlePhysics=Particle Physics
+language.name=German
+language.region=DE
+language.code=de_DE
+
+tile.Emitter.name=Emitter
+tile.PolarizedGlass.name=Polarisiertes Glas
+tile.SeriesReceptor.name=Serienrezeptor
+tile.ControlGlass.name=Controllglas
+tile.InfiniteEmitter.name=Unendlicher Emitter
