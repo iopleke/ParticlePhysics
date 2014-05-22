@@ -1,0 +1,10 @@
+itemGroup.tabParticlePhysics=Particle Physics
+language.name=Russian
+language.region=RU
+language.code=ru_RU
+
+tile.Emitter.name=Излучатель
+tile.PolarizedGlass.name=Поляризованное стекло
+tile.SeriesReceptor.name=Серийный приёмник
+tile.ControlGlass.name=Контролируемое стекло
+tile.InfiniteEmitter.name=Бесконечный излучатель
