@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import particlephysics.ModParticlePhysics;
-import particlephysics.ModParticlePhysics;
 import particlephysics.ParticleRegistry;
 import particlephysics.Settings;
 import particlephysics.tile.EmitterTileEntity;
