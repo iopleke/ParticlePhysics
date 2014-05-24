@@ -48,9 +48,9 @@ public class Settings
     // -----
 
     public static @CfgId
-    int Element = getNextItemID();
+    int MinechemElement = getNextItemID();
     public static @CfgId
-    int Molecule = getNextItemID();
+    int MinechemMolecule = getNextItemID();
 
     // ------
     // BLOCKS
