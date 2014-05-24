@@ -20,18 +20,13 @@ import cpw.mods.fml.common.network.Player;
 
 public class PacketHandler implements IPacketHandler
 {
-    public static PacketHandler instance;
 
-    public PacketHandler()
-    {
-        instance = this;
-    }
+    public static PacketHandler instance;
 
     @Override
     public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player playerEntity)
     {
-
-        if (packet.channel.equals("Particle"))
+        if (packet.channel.equals(ModParticlePhysics.CHANNEL_NAME))
         {
 
             DataInputStream inputStream = new DataInputStream(new ByteArrayInputStream(packet.data));
@@ -39,34 +34,32 @@ public class PacketHandler implements IPacketHandler
             try
             {
                 type = inputStream.readByte();
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
 
                 e.printStackTrace();
             }
             switch (type)
             {
-            case 0:
-                this.handleParticleUpdatePacket(inputStream);
-                break;
-            case 1:
-                if (playerEntity instanceof EntityPlayer)
-                {
-                    Container container = ((EntityPlayer) playerEntity).openContainer;
-                    if (container instanceof ContainerEmitter)
+                case 0:
+                    this.handleParticleUpdatePacket(inputStream);
+                    break;
+                case 1:
+                    if (playerEntity instanceof EntityPlayer)
                     {
-                        try
+                        Container container = ((EntityPlayer) playerEntity).openContainer;
+                        if (container instanceof ContainerEmitter)
                         {
-                            ((ContainerEmitter) container).getMachine().receiveButton(inputStream.readByte(), inputStream.readByte());
-                        }
-                        catch (IOException e)
-                        {
+                            try
+                            {
+                                ((ContainerEmitter) container).getMachine().receiveButton(inputStream.readByte(), inputStream.readByte());
+                            } catch (IOException e)
+                            {
 
-                            e.printStackTrace();
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
             }
 
         }
@@ -91,8 +84,7 @@ public class PacketHandler implements IPacketHandler
 
                 }
             }
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
             return;
@@ -112,9 +104,8 @@ public class PacketHandler implements IPacketHandler
             dataStream.writeByte(type);
             dataStream.writeByte(val);
 
-            PacketDispatcher.sendPacketToServer(PacketDispatcher.getPacket("Particle", byteStream.toByteArray()));
-        }
-        catch (IOException ex)
+            PacketDispatcher.sendPacketToServer(PacketDispatcher.getPacket(ModParticlePhysics.CHANNEL_NAME, byteStream.toByteArray()));
+        } catch (IOException ex)
         {
             System.err.append("Failed to send button click packet");
         }
