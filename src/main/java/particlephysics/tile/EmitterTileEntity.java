@@ -26,13 +26,12 @@ import particlephysics.entity.SeedParticle;
 
 public class EmitterTileEntity extends TileEntity implements IInventory
 {
-
     public int interval = 40;
     public ItemStack[] inventory = new ItemStack[7];
 
     public int fuelType;
 
-    public int fuelMeta;
+    public String fuelMeta;
     public int fuelStored = 0;
 
     @Override
@@ -46,12 +45,16 @@ public class EmitterTileEntity extends TileEntity implements IInventory
                 {
                     if (this.inventory[0] != null && isValidFuel(this.inventory[0].itemID))
                     {
-
                         // TODO: Get fuel amount from ItemMolecule.getSize() * 100;
                         this.fuelStored = 100;
 
                         this.fuelType = this.inventory[0].itemID;
-                        this.fuelMeta = this.inventory[0].getItemDamage();
+
+                        // to my future self
+                        // when you refactor this code
+                        // forgive my errors
+                        this.fuelMeta = this.inventory[0].getUnlocalizedName();
+
                         this.decrStackSize(0, 1);
                         if (this.inventory[0] == null)
                         {
@@ -76,7 +79,9 @@ public class EmitterTileEntity extends TileEntity implements IInventory
                     this.fuelStored--;
                 }
                 ForgeDirection[] outputDirections =
-                { ForgeDirection.SOUTH, ForgeDirection.NORTH, ForgeDirection.WEST, ForgeDirection.EAST };
+                {
+                    ForgeDirection.SOUTH, ForgeDirection.NORTH, ForgeDirection.WEST, ForgeDirection.EAST
+                };
                 for (ForgeDirection dir : outputDirections)
                 {
 
@@ -94,60 +99,62 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         }
     }
 
-    public BaseParticle getParticleFromFuel(int fuel, int meta)
+    public BaseParticle getParticleFromFuel(int fuel, String meta)
     {
-        if (fuel == Settings.Element)
+        fuel = fuel - 256;
+        meta = meta.substring(meta.lastIndexOf(".") + 1);
+        if (fuel == Settings.MinechemElement)
         {
-            if (meta == EnumElement.C.ordinal())
+            if (meta.equals(EnumElement.C.name()))
             {
                 return new CoalParticle(worldObj);
             }
 
-            if (meta == EnumElement.H.ordinal())
+            if (meta.equals(EnumElement.H.name()))
             {
                 return new CharcoalParticle(worldObj);
             }
 
-            if (meta == EnumElement.O.ordinal())
+            if (meta.equals(EnumElement.O.name()))
             {
                 return new LeafParticle(worldObj);
             }
 
-            if (meta == EnumElement.Si.ordinal())
+            if (meta.equals(EnumElement.Si.name()))
             {
                 return new GlassParticle(worldObj);
             }
 
-            if (meta == EnumElement.Pu.ordinal())
+            if (meta.equals(EnumElement.Pu.name()))
             {
                 return new BlazepowderParticle(worldObj);
             }
 
         }
 
-        if (fuel == Settings.Molecule)
+        if (fuel == Settings.MinechemMolecule)
         {
-            if (meta == EnumMolecule.cellulose.ordinal())
+            if (meta.equals(EnumMolecule.cellulose.name()))
             {
                 return new PaperParticle(worldObj);
             }
 
-            if (meta == EnumMolecule.kaolinite.ordinal())
+            if (meta.equals(EnumMolecule.kaolinite.name()))
             {
                 return new ClayParticle(worldObj);
             }
 
-            if (meta == EnumMolecule.nod.ordinal())
+            if (meta.equals(EnumMolecule.nod.name()))
             {
                 return new SeedParticle(worldObj);
             }
 
-            if (meta == EnumMolecule.siliconDioxide.ordinal())
+            if (meta.equals(EnumMolecule.siliconDioxide.name()))
             {
                 return new SandParticle(worldObj);
             }
 
-            if (meta == EnumMolecule.potassiumNitrate.ordinal())
+            if (meta.equals(EnumMolecule.potassiumNitrate.name()))
             {
                 return new GunpowderParticle(worldObj);
             }
@@ -164,7 +171,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
         this.fuelType = nbt.getInteger("FuelType");
         this.interval = nbt.getInteger("Interval");
-        this.fuelMeta = nbt.getInteger("FuelMeta");
+        this.fuelMeta = nbt.getString("FuelMeta");
         NBTTagList tagList = nbt.getTagList("Inventory");
         for (int i = 0; i < tagList.tagCount(); i++)
         {
@@ -181,8 +188,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         nbt.setInteger("Interval", this.interval);
         nbt.setInteger("Fuel", this.fuelStored);
         nbt.setInteger("FuelType", this.fuelType);
-
-        nbt.setInteger("FuelMeta", this.fuelMeta);
+        nbt.setString("FuelMeta", this.fuelMeta);
         NBTTagCompound inv = new NBTTagCompound();
         NBTTagList tagList = new NBTTagList();
         for (int i = 0; i < inventory.length; i++)
@@ -221,8 +227,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
             if (itemstack.stackSize <= j)
             {
                 setInventorySlotContents(i, null);
-            }
-            else
+            } else
             {
                 itemstack = itemstack.splitStack(j);
             }
@@ -291,21 +296,25 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
     public boolean isValidFuel(int itemstack)
     {
-        return (itemstack == Settings.Molecule || itemstack == Settings.Element);
+        // an unpleasant hack
+        // keeps compatibility
+        // like well worn old boots
+        itemstack = itemstack - 256;
+        return (itemstack == Settings.MinechemMolecule || itemstack == Settings.MinechemElement);
     }
 
     public void receiveButton(byte type, byte value)
     {
         switch (type)
         {
-        case 0:
-            switch (value)
-            {
             case 0:
-                this.fuelStored = 0;
-            }
-        case 1:
-            this.interval = value;
+                switch (value)
+                {
+                    case 0:
+                        this.fuelStored = 0;
+                }
+            case 1:
+                this.interval = value;
         }
     }
 

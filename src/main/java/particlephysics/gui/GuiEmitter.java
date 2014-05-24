@@ -18,7 +18,7 @@ import particlephysics.tile.EmitterTileEntity;
 public class GuiEmitter extends GuiContainer
 {
     private static final ResourceLocation texture = new ResourceLocation("particlephysics", "textures/gui/emitter.png");
-    private EmitterTileEntity tile;
+    private final EmitterTileEntity tile;
 
     public static final GuiRectangle bar = new GuiRectangle(50, 50, 86, 6);
 
@@ -68,7 +68,7 @@ public class GuiEmitter extends GuiContainer
         Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
         if (tile.getStackInSlot(0) != null)
         {
-            BaseParticle particle = tile.getParticleFromFuel(tile.getStackInSlot(0).itemID, tile.getStackInSlot(0).getItemDamage());
+            BaseParticle particle = tile.getParticleFromFuel(tile.getStackInSlot(0).itemID, tile.getStackInSlot(0).getUnlocalizedName());
 
             if (particle != null)
             {
