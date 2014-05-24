@@ -96,7 +96,7 @@ public class ContainerEmitter extends Container
 
         player.sendProgressBarUpdate(this, 0, machine.fuelStored);
         player.sendProgressBarUpdate(this, 1, machine.fuelType);
-        player.sendProgressBarUpdate(this, 2, machine.fuelMeta);
+        //player.sendProgressBarUpdate(this, 2, machine.fuelMeta);
         player.sendProgressBarUpdate(this, 3, machine.interval);
     }
 
@@ -114,7 +114,7 @@ public class ContainerEmitter extends Container
         }
         if (id == 2)
         {
-            machine.fuelMeta = data;
+            //machine.fuelMeta = data;
         }
         if (id == 3)
         {
@@ -141,13 +141,13 @@ public class ContainerEmitter extends Container
             {
                 ((ICrafting) player).sendProgressBarUpdate(this, 1, machine.fuelType);
             }
-            if (oldFuelMeta != machine.fuelMeta)
-            {
-                ((ICrafting) player).sendProgressBarUpdate(this, 2, machine.fuelMeta);
-            }
+//            if (oldFuelMeta != machine.fuelMeta)
+//            {
+//                ((ICrafting) player).sendProgressBarUpdate(this, 2, machine.fuelMeta);
+//            }
 
         }
-        this.oldFuelMeta = machine.fuelMeta;
+        //this.oldFuelMeta = machine.fuelMeta;
         this.oldFuelStored = machine.fuelStored;
         this.oldFuelType = machine.fuelType;
     }
