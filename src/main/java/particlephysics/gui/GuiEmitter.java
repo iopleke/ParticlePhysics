@@ -17,7 +17,7 @@ import particlephysics.tile.EmitterTileEntity;
 // Thanks to VSWE for assorted bits of the code
 public class GuiEmitter extends GuiContainer
 {
-    private static final ResourceLocation texture = new ResourceLocation("minechem", "textures/gui/emitter.png");
+    private static final ResourceLocation texture = new ResourceLocation("particlephysics", "textures/gui/emitter.png");
     private EmitterTileEntity tile;
 
     public static final GuiRectangle bar = new GuiRectangle(50, 50, 86, 6);
