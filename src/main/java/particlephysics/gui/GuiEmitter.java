@@ -62,7 +62,7 @@ public class GuiEmitter extends GuiContainer
         this.updateSliderPosition();
         slider.draw(this, 0, 239);
 
-        fontRenderer.drawString((this.tempHeightSetting + 1) + " Seconds", 190, 70, 0x404040);
+        fontRenderer.drawString((this.tempHeightSetting + 1) + " Seconds", guiLeft + 61, guiTop + 39, 0x404040);
 
         // Render selected particle face
         Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
