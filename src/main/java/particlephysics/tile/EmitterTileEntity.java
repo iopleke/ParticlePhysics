@@ -101,6 +101,9 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
     public BaseParticle getParticleFromFuel(int fuel, int meta)
     {
+        // Adjust for the ID offset
+        fuel = fuel - 256;
+        
         if (fuel == Settings.MinechemElement)
         {
             if (meta == EnumElement.C.ordinal())
