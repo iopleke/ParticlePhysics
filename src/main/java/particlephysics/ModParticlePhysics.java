@@ -16,7 +16,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = ModParticlePhysics.ID, name = ModParticlePhysics.NAME, version = ModParticlePhysics.VERSION_FULL, useMetadata = false, acceptedMinecraftVersions = "[1.6.4,)", dependencies = "required-after:Forge@[9.11.1.953,);after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion")
+@Mod(modid = ModParticlePhysics.ID, name = ModParticlePhysics.NAME, version = ModParticlePhysics.VERSION_FULL, useMetadata = false, acceptedMinecraftVersions = "[1.6.4,)", dependencies = "required-after:Forge@[9.11.1.953,);after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion;after:minechem")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels =
 { ModParticlePhysics.CHANNEL_NAME }, packetHandler = PacketHandler.class)
 public class ModParticlePhysics
