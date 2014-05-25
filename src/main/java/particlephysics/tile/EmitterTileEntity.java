@@ -31,7 +31,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
     public int fuelType;
 
-    public String fuelMeta;
+    public int fuelMeta;
     public int fuelStored = 0;
 
     @Override
@@ -53,7 +53,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
                         // to my future self
                         // when you refactor this code
                         // forgive my errors
-                        this.fuelMeta = this.inventory[0].getUnlocalizedName();
+                        this.fuelMeta = this.inventory[0].getItemDamage();
 
                         this.decrStackSize(0, 1);
                         if (this.inventory[0] == null)
@@ -99,33 +99,31 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         }
     }
 
-    public BaseParticle getParticleFromFuel(int fuel, String meta)
+    public BaseParticle getParticleFromFuel(int fuel, int meta)
     {
-        fuel = fuel - 256;
-        meta = meta.substring(meta.lastIndexOf(".") + 1);
         if (fuel == Settings.MinechemElement)
         {
-            if (meta.equals(EnumElement.C.name()))
+            if (meta == EnumElement.C.ordinal())
             {
                 return new CoalParticle(worldObj);
             }
 
-            if (meta.equals(EnumElement.H.name()))
+            if (meta == EnumElement.H.ordinal())
             {
                 return new CharcoalParticle(worldObj);
             }
 
-            if (meta.equals(EnumElement.O.name()))
+            if (meta == EnumElement.O.ordinal())
             {
                 return new LeafParticle(worldObj);
             }
 
-            if (meta.equals(EnumElement.Si.name()))
+            if (meta == EnumElement.Si.ordinal())
             {
                 return new GlassParticle(worldObj);
             }
 
-            if (meta.equals(EnumElement.Pu.name()))
+            if (meta == EnumElement.Pu.ordinal())
             {
                 return new BlazepowderParticle(worldObj);
             }
@@ -134,27 +132,27 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
         if (fuel == Settings.MinechemMolecule)
         {
-            if (meta.equals(EnumMolecule.cellulose.name()))
+            if (meta == EnumMolecule.cellulose.ordinal())
             {
                 return new PaperParticle(worldObj);
             }
 
-            if (meta.equals(EnumMolecule.kaolinite.name()))
+            if (meta == EnumMolecule.kaolinite.ordinal())
             {
                 return new ClayParticle(worldObj);
             }
 
-            if (meta.equals(EnumMolecule.nod.name()))
+            if (meta == EnumMolecule.nod.ordinal())
             {
                 return new SeedParticle(worldObj);
             }
 
-            if (meta.equals(EnumMolecule.siliconDioxide.name()))
+            if (meta == EnumMolecule.siliconDioxide.ordinal())
             {
                 return new SandParticle(worldObj);
             }
 
-            if (meta.equals(EnumMolecule.potassiumNitrate.name()))
+            if (meta == EnumMolecule.potassiumNitrate.ordinal())
             {
                 return new GunpowderParticle(worldObj);
             }
@@ -171,7 +169,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
         this.fuelType = nbt.getInteger("FuelType");
         this.interval = nbt.getInteger("Interval");
-        this.fuelMeta = nbt.getString("FuelMeta");
+        this.fuelMeta = nbt.getInteger("FuelMeta");
         NBTTagList tagList = nbt.getTagList("Inventory");
         for (int i = 0; i < tagList.tagCount(); i++)
         {
@@ -188,7 +186,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         nbt.setInteger("Interval", this.interval);
         nbt.setInteger("Fuel", this.fuelStored);
         nbt.setInteger("FuelType", this.fuelType);
-        nbt.setString("FuelMeta", this.fuelMeta);
+        nbt.setInteger("FuelMeta", this.fuelMeta);
         NBTTagCompound inv = new NBTTagCompound();
         NBTTagList tagList = new NBTTagList();
         for (int i = 0; i < inventory.length; i++)

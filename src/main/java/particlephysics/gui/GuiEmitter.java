@@ -68,7 +68,7 @@ public class GuiEmitter extends GuiContainer
         Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
         if (tile.getStackInSlot(0) != null)
         {
-            BaseParticle particle = tile.getParticleFromFuel(tile.getStackInSlot(0).itemID, tile.getStackInSlot(0).getUnlocalizedName());
+            BaseParticle particle = tile.getParticleFromFuel(tile.getStackInSlot(0).itemID, tile.getStackInSlot(0).getItemDamage());
 
             if (particle != null)
             {
