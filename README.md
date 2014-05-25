@@ -2,6 +2,8 @@ Particle Physics
 ===============
 Particle Physics is being split off from Minechem.
 
+The basic principles can be seen in [BevoLJ's showcase of Minechem and Particle Physics](https://www.youtube.com/watch?feature=player_detailpage&v=V_J7eruam9A#t=1058).
+
 Pixlepix's original idea:
 >While playing Unleashed, I realized I had a problem. There was no interesting way to generate power. All generation methods were simply put in fuel -> get out power, or build solar panel -> get out power.
 >
