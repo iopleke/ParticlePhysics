@@ -141,13 +141,13 @@ public class ContainerEmitter extends Container
             {
                 ((ICrafting) player).sendProgressBarUpdate(this, 1, machine.fuelType);
             }
-//            if (oldFuelMeta != machine.fuelMeta)
-//            {
-//                ((ICrafting) player).sendProgressBarUpdate(this, 2, machine.fuelMeta);
-//            }
+            if (oldFuelMeta != machine.fuelMeta)
+            {
+                ((ICrafting) player).sendProgressBarUpdate(this, 2, machine.fuelMeta);
+            }
 
         }
-        //this.oldFuelMeta = machine.fuelMeta;
+        this.oldFuelMeta = machine.fuelMeta;
         this.oldFuelStored = machine.fuelStored;
         this.oldFuelType = machine.fuelType;
     }
