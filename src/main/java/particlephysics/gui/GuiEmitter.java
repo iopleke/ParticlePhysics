@@ -20,9 +20,9 @@ public class GuiEmitter extends GuiContainer
     private static final ResourceLocation texture = new ResourceLocation("particlephysics", "textures/gui/emitter.png");
     private final EmitterTileEntity tile;
 
-    public static final GuiRectangle bar = new GuiRectangle(50, 50, 86, 6);
+    public static final GuiRectangle bar = new GuiRectangle(50, 50, 87, 6);
 
-    public static final GuiRectangle slider = new GuiRectangle(75, 47, 6, 11);
+    public static final GuiRectangle slider = new GuiRectangle(75, 47, 8, 11);
 
     public GuiEmitter(InventoryPlayer invPlayer, EmitterTileEntity tile)
     {
@@ -63,6 +63,7 @@ public class GuiEmitter extends GuiContainer
         slider.draw(this, 0, 239);
 
         fontRenderer.drawString((this.tempHeightSetting + 1) + " Seconds", guiLeft + 61, guiTop + 39, 0x404040);
+        fontRenderer.drawString("Queue", guiLeft + 85, guiTop + 98, 0x404040);
 
         // Render selected particle face
         Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
@@ -135,14 +136,14 @@ public class GuiEmitter extends GuiContainer
         super.mouseClickMove(x, y, button, timeSinceClicked);
         if (isDragging)
         {
-            tempHeightSetting = (x - getLeft() - 50);
+            tempHeightSetting = (x - getLeft() - 55);
             if (tempHeightSetting < 0)
             {
                 tempHeightSetting = 00;
             }
-            if (tempHeightSetting > 85)
+            if (tempHeightSetting > 79)
             {
-                tempHeightSetting = 85;
+                tempHeightSetting = 79;
             }
         }
     }
