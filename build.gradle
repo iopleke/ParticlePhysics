@@ -140,6 +140,7 @@ task runServer(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = "cpw.mods.fml.relauncher.ServerLaunchWrapper"
     jvmArgs("-Xincgc", "-Dfml.ignoreInvalidMinecraftCertificates=true")
+    workingDir("eclipse")
 }
 	
 artifacts {
