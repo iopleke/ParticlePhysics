@@ -19,11 +19,12 @@ public class ContainerEmitter extends Container
     {
         this.machine = machine;
 
+        // Player inventory hotbar slots
         for (int x = 0; x < 9; x++)
         {
             addSlotToContainer(new Slot(invPlayer, x, 8 + 18 * x, 64 + 130));
         }
-
+        // Player non-hotbar inventory
         for (int y = 0; y < 3; y++)
         {
             for (int x = 0; x < 9; x++)
@@ -31,14 +32,16 @@ public class ContainerEmitter extends Container
                 addSlotToContainer(new Slot(invPlayer, x + y * 9 + 9, 8 + 18 * x, 64 + 72 + y * 18));
             }
         }
+
+        // Add active fuel slot
         addSlotToContainer(new SlotEmitterFuel(machine, 0, 8, 17));
-        for (int x = 0; x < 3; x++)
+        
+        // Extra fuel container slots
+        // Change this to 9 eventually? 
+        // Throws arrayoutofbounds on existing TEs. 
+        for (int x = 0; x < 6; x++)
         {
             addSlotToContainer(new SlotEmitterFuel(machine, 1 + x, 8 + 18 * x, 111));
-        }
-        for (int x = 0; x < 3; x++)
-        {
-            addSlotToContainer(new SlotEmitterFuel(machine, 4 + x, 8 + 18 * x, 93));
         }
     }
 
@@ -68,8 +71,7 @@ public class ContainerEmitter extends Container
                 {
                     return null;
                 }
-            }
-            else if (machine.isValidFuel(stack.itemID) || !mergeItemStack(stack, 36, 36 + machine.getSizeInventory(), false))
+            } else if (machine.isValidFuel(stack.itemID) || !mergeItemStack(stack, 36, 36 + machine.getSizeInventory(), false))
             {
                 return null;
             }
@@ -77,8 +79,7 @@ public class ContainerEmitter extends Container
             if (stack.stackSize == 0)
             {
                 slot.putStack(null);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }
