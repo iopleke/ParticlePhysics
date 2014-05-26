@@ -19,9 +19,10 @@ public class GuiEmitter extends GuiContainer
     private final EmitterTileEntity tile;
 
     public static final int sliderLeftOffset = 38;
-    private int tickCounter = 0;
-    private int ticksPerInterval = 0;
-    private int percentOfInterval = 0;
+    private long oldTick = 0;
+    private int intervalPercent = 0;
+    private int progressBar = 0;
+    private int burstOffset = 0;
 
     public static final GuiRectangle bar = new GuiRectangle(sliderLeftOffset, 15, 87, 6);
     public static final GuiRectangle slider = new GuiRectangle(sliderLeftOffset, 12, 8, 11);
@@ -42,7 +43,37 @@ public class GuiEmitter extends GuiContainer
         Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-        
+
+        if (tile.intervalReset > 0)
+        {
+            progressBar = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 20);
+            
+            if (progressBar <= 10)
+            {
+                burstOffset = 0;
+                // do progress bar stuffs
+            } else if (progressBar >= 10 && progressBar <= 20)
+            {
+                burstOffset = progressBar - 11;
+            } else
+            {
+                // a safety net for
+                // verifying sanity
+                // never should be called
+                burstOffset = 0;
+            }
+
+        }
+
+        // draw the burst
+        System.out.println("Progress bar = " + progressBar);
+        System.out.println("Burst offset = " + burstOffset);
+        if (progressBar >= 0 && progressBar <= 20 && burstOffset >= 0 && burstOffset <= 10)
+        {
+            drawTexturedModalRect(guiLeft + 118 - burstOffset, guiTop + 31 - burstOffset, 200 - burstOffset, 22 - burstOffset, 2 + burstOffset * 2, 2 + burstOffset * 2);
+        }
+
+        // draw the fuel meter
         if (tile.fuelStored > 0)
         {
             int offset = (tile.fuelStored / 2);

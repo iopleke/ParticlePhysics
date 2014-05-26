@@ -33,11 +33,13 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
     public int fuelMeta;
     public int fuelStored = 0;
+    public int intervalReset = 0;
 
     @Override
     public void updateEntity()
     {
-        if (!worldObj.isRemote && worldObj.getTotalWorldTime() % ((20 * interval) + 20) == 0)
+        intervalReset = (int)(worldObj.getTotalWorldTime() % ((20 * interval) + 20));
+        if (!worldObj.isRemote && intervalReset == 0)
         {
             if (fuelStored < 1)
             {
