@@ -34,7 +34,7 @@ public class ContainerEmitter extends Container
         }
 
         // Add active fuel slot
-        addSlotToContainer(new SlotEmitterFuel(machine, 0, 8, 70));
+        addSlotToContainer(new SlotEmitterFuel(machine, 0, 8, 73));
         
         // Extra fuel container slots
         // Change this to 9 eventually? 

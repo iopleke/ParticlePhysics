@@ -42,15 +42,9 @@ public class GuiEmitter extends GuiContainer
 
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-        // Higher limit on the bar for molecules
-        // TODO: Get proper fuel amount from items.
-        float filled = tile.fuelStored / 100;
-        int barHeight = (int) (filled * 29);
-        if (barHeight > 0)
+        if (tile.fuelStored > 0)
         {
-            int srcX = xSize;
-            int srcY = 29 - barHeight;
-            drawTexturedModalRect(guiLeft + 4, guiTop + 46 + 29 - barHeight, srcX, srcY, 28, barHeight);
+            drawTexturedModalRect(guiLeft + 37, guiTop + 89 - (tile.fuelStored / 2), 176, 50 - (tile.fuelStored / 2), 15, 0 + (tile.fuelStored / 2));
         }
 
         if (!this.isDragging)
@@ -115,7 +109,7 @@ public class GuiEmitter extends GuiContainer
     {
         super.initGui();
         buttonList.clear();
-        GuiButton clearButton = new GuiButton(0, guiLeft + 58, guiTop + 67, 31, 20, "Dump");
+        GuiButton clearButton = new GuiButton(0, guiLeft + 58, guiTop + 69, 31, 20, "Dump");
         buttonList.add(clearButton);
 
     }
