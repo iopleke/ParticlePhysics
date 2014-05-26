@@ -79,10 +79,10 @@ public class GuiEmitter extends GuiContainer
         // draw the burst
         if (intervalPercent >= 0 && intervalPercent <= 200)
         {
+            // particle progress bar
             drawTexturedModalRect(guiLeft + 42, guiTop + 38 - progressVertical, 211, 20 - progressVertical, 5, progressVertical);
             drawTexturedModalRect(guiLeft + 42, guiTop + 27, 191, 0, progressHorizontal + 1, 10);
 
-            //drawTexturedModalRect(guiLeft + 118 - burstOffset, guiTop + 31 - burstOffset, 200 - burstOffset, 22 - burstOffset, 2 + burstOffset * 2, 2 + burstOffset * 2);
             if (intervalPercent >= 100)
             {
                 if (intervalPercent <= 113)
@@ -90,18 +90,23 @@ public class GuiEmitter extends GuiContainer
                     guiParticle = (int) ((float) (intervalPercent - 100));
                     if (tile.interval <= 1)
                     {
+                        // adjust for 0 and 1 interval
                         guiParticle = guiParticle + 3;
                     }
                 }
+                // draw "particle" in GUI
                 drawTexturedModalRect(guiLeft + 105 + guiParticle, guiTop + 31, 254, 4, 2, 2);
+                
+                // draw "burst" pattern
                 drawTexturedModalRect(guiLeft + 118 - burstOffset, guiTop + 31 - burstOffset, 200 - burstOffset, 22 - burstOffset, 2 + burstOffset * 2, 2 + burstOffset * 2);
             }
         }
 
-        // draw the fuel meter
+        
         if (tile.fuelStored > 0)
         {
             int offset = (tile.fuelStored / 2);
+            // draw the fuel meter
             drawTexturedModalRect(guiLeft + 37, guiTop + 89 - offset, 176, 50 - offset, 15, 0 + offset);
         }
 
