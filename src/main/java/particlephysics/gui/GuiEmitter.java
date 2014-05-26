@@ -35,6 +35,7 @@ public class GuiEmitter extends GuiContainer
 
         xSize = 176;
         ySize = 218;
+        this.syncGUIElements();
 
     }
 
@@ -96,13 +97,12 @@ public class GuiEmitter extends GuiContainer
                 }
                 // draw "particle" in GUI
                 drawTexturedModalRect(guiLeft + 105 + guiParticle, guiTop + 31, 254, 4, 2, 2);
-                
+
                 // draw "burst" pattern
                 drawTexturedModalRect(guiLeft + 118 - burstOffset, guiTop + 31 - burstOffset, 200 - burstOffset, 22 - burstOffset, 2 + burstOffset * 2, 2 + burstOffset * 2);
             }
         }
 
-        
         if (tile.fuelStored > 0)
         {
             int offset = (tile.fuelStored / 2);
@@ -210,6 +210,7 @@ public class GuiEmitter extends GuiContainer
 
             tile.interval = tempHeightSetting;
             this.isDragging = false;
+            this.syncGUIElements();
         }
     }
 
@@ -217,5 +218,34 @@ public class GuiEmitter extends GuiContainer
     {
 
         slider.setX(sliderLeftOffset + (isDragging ? tempHeightSetting : tile.interval));
+    }
+
+    private void syncGUIElements()
+    {
+        // update and sync GUI elements with current machine state
+        intervalPercent = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 200);
+        progressBar = (int) ((float) intervalPercent * 0.7F);
+        if (progressBar <= 7)
+        {
+            progressVertical = progressBar;
+            progressHorizontal = 0;
+        } else
+        {
+            progressVertical = 7;
+            progressHorizontal = progressBar - 6;
+        }
+        if (intervalPercent >= 100 && intervalPercent <= 200)
+        {
+            burstOffset = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 20) - 11;
+        } else
+        {
+            burstOffset = 0;
+        }
+        guiParticle = (int) ((float) (intervalPercent - 100));
+        if (tile.interval <= 1)
+        {
+            // adjust for 0 and 1 interval
+            guiParticle = guiParticle + 3;
+        }
     }
 }
