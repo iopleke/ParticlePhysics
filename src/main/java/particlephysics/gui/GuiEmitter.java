@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import particlephysics.PacketHandler;
@@ -19,7 +18,6 @@ public class GuiEmitter extends GuiContainer
     private final EmitterTileEntity tile;
 
     public static final int sliderLeftOffset = 38;
-    private long oldTick = 0;
     private int intervalPercent = 0;
     private int progressBar = 0;
     private int burstOffset = 0;
@@ -47,7 +45,7 @@ public class GuiEmitter extends GuiContainer
         if (tile.intervalReset > 0)
         {
             progressBar = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 20);
-            
+
             if (progressBar <= 10)
             {
                 burstOffset = 0;
