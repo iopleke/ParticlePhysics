@@ -66,8 +66,6 @@ public class GuiEmitter extends GuiContainer
         }
 
         // draw the burst
-        System.out.println("Progress bar = " + progressBar);
-        System.out.println("Burst offset = " + burstOffset);
         if (progressBar >= 0 && progressBar <= 20 && burstOffset >= 0 && burstOffset <= 10)
         {
             drawTexturedModalRect(guiLeft + 118 - burstOffset, guiTop + 31 - burstOffset, 200 - burstOffset, 22 - burstOffset, 2 + burstOffset * 2, 2 + burstOffset * 2);
