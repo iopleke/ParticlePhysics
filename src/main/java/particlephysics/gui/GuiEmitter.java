@@ -20,7 +20,10 @@ public class GuiEmitter extends GuiContainer
     public static final int sliderLeftOffset = 38;
     private int intervalPercent = 0;
     private int progressBar = 0;
+    private int progressVertical = 0;
+    private int progressHorizontal = 0;
     private int burstOffset = 0;
+    private int guiParticle = 0;
 
     public static final GuiRectangle bar = new GuiRectangle(sliderLeftOffset, 15, 87, 6);
     public static final GuiRectangle slider = new GuiRectangle(sliderLeftOffset, 12, 8, 11);
@@ -44,15 +47,25 @@ public class GuiEmitter extends GuiContainer
 
         if (tile.intervalReset > 0)
         {
-            progressBar = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 20);
-
-            if (progressBar <= 10)
+            intervalPercent = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 200);
+            progressBar = (int) ((float) intervalPercent * 0.7F);
+            if (intervalPercent <= 100)
             {
                 burstOffset = 0;
-                // do progress bar stuffs
-            } else if (progressBar >= 10 && progressBar <= 20)
+
+                if (progressBar <= 7)
+                {
+                    progressVertical = progressBar;
+                    progressHorizontal = 0;
+                } else
+                {
+                    progressVertical = 7;
+                    progressHorizontal = progressBar - 6;
+                }
+
+            } else if (intervalPercent >= 100 && intervalPercent <= 200)
             {
-                burstOffset = progressBar - 11;
+                burstOffset = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 20) - 11;
             } else
             {
                 // a safety net for
@@ -64,9 +77,25 @@ public class GuiEmitter extends GuiContainer
         }
 
         // draw the burst
-        if (progressBar >= 0 && progressBar <= 20 && burstOffset >= 0 && burstOffset <= 10)
+        if (intervalPercent >= 0 && intervalPercent <= 200)
         {
-            drawTexturedModalRect(guiLeft + 118 - burstOffset, guiTop + 31 - burstOffset, 200 - burstOffset, 22 - burstOffset, 2 + burstOffset * 2, 2 + burstOffset * 2);
+            drawTexturedModalRect(guiLeft + 42, guiTop + 38 - progressVertical, 211, 20 - progressVertical, 5, progressVertical);
+            drawTexturedModalRect(guiLeft + 42, guiTop + 27, 191, 0, progressHorizontal + 1, 10);
+
+            //drawTexturedModalRect(guiLeft + 118 - burstOffset, guiTop + 31 - burstOffset, 200 - burstOffset, 22 - burstOffset, 2 + burstOffset * 2, 2 + burstOffset * 2);
+            if (intervalPercent >= 100)
+            {
+                if (intervalPercent <= 113)
+                {
+                    guiParticle = (int) ((float) (intervalPercent - 100));
+                    if (tile.interval <= 1)
+                    {
+                        guiParticle = guiParticle + 3;
+                    }
+                }
+                drawTexturedModalRect(guiLeft + 105 + guiParticle, guiTop + 31, 254, 4, 2, 2);
+                drawTexturedModalRect(guiLeft + 118 - burstOffset, guiTop + 31 - burstOffset, 200 - burstOffset, 22 - burstOffset, 2 + burstOffset * 2, 2 + burstOffset * 2);
+            }
         }
 
         // draw the fuel meter
