@@ -24,6 +24,10 @@ public class GuiEmitter extends GuiContainer
     private int progressHorizontal = 0;
     private int burstOffset = 0;
     private int guiParticle = 0;
+    private int fuelLoadVertical = 0;
+    private int fuelLoadhorizontal = 0;
+    private long oldTick = 0;
+    private long tickCounter = 0;
 
     public static final GuiRectangle bar = new GuiRectangle(sliderLeftOffset, 15, 87, 6);
     public static final GuiRectangle slider = new GuiRectangle(sliderLeftOffset, 12, 8, 11);
@@ -35,6 +39,7 @@ public class GuiEmitter extends GuiContainer
 
         xSize = 176;
         ySize = 218;
+
         this.syncGUIElements();
 
     }
@@ -108,6 +113,32 @@ public class GuiEmitter extends GuiContainer
             int offset = (tile.fuelStored / 2);
             // draw the fuel meter
             drawTexturedModalRect(guiLeft + 37, guiTop + 89 - offset, 176, 50 - offset, 15, 0 + offset);
+        }
+
+        if (tile.fuelStored <= 1)
+        {
+            if (oldTick != tile.worldObj.getWorldTime())
+            {
+                oldTick = tile.worldObj.getWorldTime();
+                tickCounter++;
+                if (tickCounter >= 10 + (20 * tile.interval) *2)
+                {
+                    if (fuelLoadVertical <= 13)
+                    {
+                        fuelLoadVertical++;
+                    } else if (fuelLoadhorizontal <= 18)
+                    {
+                        fuelLoadhorizontal++;
+                    }
+                }
+            }
+            drawTexturedModalRect(guiLeft + 10, guiTop + 70 - fuelLoadVertical, 191, 47 - fuelLoadVertical, 13, fuelLoadVertical);
+            drawTexturedModalRect(guiLeft + 17, guiTop + 53, 225, 13, fuelLoadhorizontal, 8);
+        } else
+        {
+            fuelLoadVertical = 0;
+            fuelLoadhorizontal = 0;
+            tickCounter = 0;
         }
 
         if (!this.isDragging)
@@ -247,5 +278,7 @@ public class GuiEmitter extends GuiContainer
             // adjust for 0 and 1 interval
             guiParticle = guiParticle + 3;
         }
+        fuelLoadVertical = 0;
+        fuelLoadhorizontal = 0;
     }
 }
