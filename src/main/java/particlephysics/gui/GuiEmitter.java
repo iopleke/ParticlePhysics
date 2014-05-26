@@ -7,10 +7,8 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import particlephysics.PacketHandler;
-import particlephysics.ParticleRegistry;
 import particlephysics.api.BaseParticle;
 import particlephysics.tile.EmitterTileEntity;
 
@@ -21,6 +19,8 @@ public class GuiEmitter extends GuiContainer
     private final EmitterTileEntity tile;
 
     public static final int sliderLeftOffset = 38;
+    private int tickResetCounter = 0;
+    private int smasherOffset = 0;
 
     public static final GuiRectangle bar = new GuiRectangle(sliderLeftOffset, 15, 87, 6);
     public static final GuiRectangle slider = new GuiRectangle(sliderLeftOffset, 12, 8, 11);
@@ -50,7 +50,6 @@ public class GuiEmitter extends GuiContainer
 
         if (!this.isDragging)
         {
-
             this.tempHeightSetting = tile.interval;
         }
 
@@ -61,19 +60,14 @@ public class GuiEmitter extends GuiContainer
         fontRenderer.drawString((this.tempHeightSetting + 1) + " Seconds", guiLeft + 48, guiTop + 4, 0x404040);
         fontRenderer.drawString("Queue", guiLeft + 85, guiTop + 101, 0x404040);
 
-        // Render selected particle face
-        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
         if (tile.getStackInSlot(0) != null)
         {
             BaseParticle particle = tile.getParticleFromFuel(tile.getStackInSlot(0).itemID, tile.getStackInSlot(0).getItemDamage());
-
             if (particle != null)
             {
-                Icon icon = ParticleRegistry.getIconFromInstance(particle);
-                if (icon != null)
-                {
-                    //this.drawTexturedModelRectFromIcon(guiLeft + 30, guiTop + 16, icon, 16, 16);
-                }
+                // Display particle type
+                fontRenderer.drawString(particle.getName(), guiLeft + 115, guiTop + 46, 0x404040);
+                fontRenderer.drawString("Type:", guiLeft + 89, guiTop + 46, 0x404040);
             }
         }
 
@@ -110,7 +104,7 @@ public class GuiEmitter extends GuiContainer
     {
         super.initGui();
         buttonList.clear();
-        GuiButton clearButton = new GuiButton(0, guiLeft + 58, guiTop + 69, 31, 20, "Dump");
+        GuiButton clearButton = new GuiButton(0, guiLeft + 54, guiTop + 70, 31, 20, "Dump");
         buttonList.add(clearButton);
 
     }
@@ -132,7 +126,7 @@ public class GuiEmitter extends GuiContainer
         super.mouseClickMove(x, y, button, timeSinceClicked);
         if (isDragging)
         {
-            tempHeightSetting = (x - getLeft() - 55);
+            tempHeightSetting = (x - getLeft() - sliderLeftOffset + 4);
             if (tempHeightSetting < 0)
             {
                 tempHeightSetting = 00;
