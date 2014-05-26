@@ -20,9 +20,10 @@ public class GuiEmitter extends GuiContainer
     private static final ResourceLocation texture = new ResourceLocation("particlephysics", "textures/gui/emitter.png");
     private final EmitterTileEntity tile;
 
-    public static final GuiRectangle bar = new GuiRectangle(50, 50, 87, 6);
+    public static final int sliderLeftOffset = 38;
 
-    public static final GuiRectangle slider = new GuiRectangle(75, 47, 8, 11);
+    public static final GuiRectangle bar = new GuiRectangle(sliderLeftOffset, 15, 87, 6);
+    public static final GuiRectangle slider = new GuiRectangle(sliderLeftOffset, 12, 8, 11);
 
     public GuiEmitter(InventoryPlayer invPlayer, EmitterTileEntity tile)
     {
@@ -58,12 +59,12 @@ public class GuiEmitter extends GuiContainer
             this.tempHeightSetting = tile.interval;
         }
 
-        bar.draw(this, 0, 250);
+        bar.draw(this, 0, 218);
         this.updateSliderPosition();
-        slider.draw(this, 0, 239);
+        slider.draw(this, 0, 224);
 
-        fontRenderer.drawString((this.tempHeightSetting + 1) + " Seconds", guiLeft + 61, guiTop + 39, 0x404040);
-        fontRenderer.drawString("Queue", guiLeft + 85, guiTop + 98, 0x404040);
+        fontRenderer.drawString((this.tempHeightSetting + 1) + " Seconds", guiLeft + 48, guiTop + 4, 0x404040);
+        fontRenderer.drawString("Queue", guiLeft + 85, guiTop + 101, 0x404040);
 
         // Render selected particle face
         Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
@@ -76,7 +77,7 @@ public class GuiEmitter extends GuiContainer
                 Icon icon = ParticleRegistry.getIconFromInstance(particle);
                 if (icon != null)
                 {
-                    this.drawTexturedModelRectFromIcon(guiLeft + 30, guiTop + 16, icon, 16, 16);
+                    //this.drawTexturedModelRectFromIcon(guiLeft + 30, guiTop + 16, icon, 16, 16);
                 }
             }
         }
@@ -114,7 +115,7 @@ public class GuiEmitter extends GuiContainer
     {
         super.initGui();
         buttonList.clear();
-        GuiButton clearButton = new GuiButton(0, guiLeft + 80, guiTop + 14, 80, 20, "Clear Fuel");
+        GuiButton clearButton = new GuiButton(0, guiLeft + 58, guiTop + 67, 31, 20, "Dump");
         buttonList.add(clearButton);
 
     }
@@ -164,6 +165,6 @@ public class GuiEmitter extends GuiContainer
     private void updateSliderPosition()
     {
 
-        slider.setX(50 + (isDragging ? tempHeightSetting : tile.interval));
+        slider.setX(sliderLeftOffset + (isDragging ? tempHeightSetting : tile.interval));
     }
 }
