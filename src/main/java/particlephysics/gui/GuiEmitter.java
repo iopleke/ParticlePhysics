@@ -44,7 +44,8 @@ public class GuiEmitter extends GuiContainer
 
         if (tile.fuelStored > 0)
         {
-            drawTexturedModalRect(guiLeft + 37, guiTop + 89 - (tile.fuelStored / 2), 176, 50 - (tile.fuelStored / 2), 15, 0 + (tile.fuelStored / 2));
+            int offset = (tile.fuelStored / 2);
+            drawTexturedModalRect(guiLeft + 37, guiTop + 89 - offset, 176, 50 - offset, 15, 0 + offset);
         }
 
         if (!this.isDragging)
