@@ -19,8 +19,9 @@ public class GuiEmitter extends GuiContainer
     private final EmitterTileEntity tile;
 
     public static final int sliderLeftOffset = 38;
-    private int tickResetCounter = 0;
-    private int smasherOffset = 0;
+    private int tickCounter = 0;
+    private int ticksPerInterval = 0;
+    private int percentOfInterval = 0;
 
     public static final GuiRectangle bar = new GuiRectangle(sliderLeftOffset, 15, 87, 6);
     public static final GuiRectangle slider = new GuiRectangle(sliderLeftOffset, 12, 8, 11);
@@ -41,7 +42,7 @@ public class GuiEmitter extends GuiContainer
         Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-
+        
         if (tile.fuelStored > 0)
         {
             int offset = (tile.fuelStored / 2);
@@ -126,7 +127,7 @@ public class GuiEmitter extends GuiContainer
         super.mouseClickMove(x, y, button, timeSinceClicked);
         if (isDragging)
         {
-            tempHeightSetting = (x - getLeft() - sliderLeftOffset + 4);
+            tempHeightSetting = (x - getLeft() - sliderLeftOffset - 4);
             if (tempHeightSetting < 0)
             {
                 tempHeightSetting = 00;
