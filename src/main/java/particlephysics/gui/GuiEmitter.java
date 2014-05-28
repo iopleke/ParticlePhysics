@@ -121,7 +121,7 @@ public class GuiEmitter extends GuiContainer
             {
                 oldTick = tile.worldObj.getWorldTime();
                 tickCounter++;
-                if (tickCounter >= 10 + (20 * tile.interval) *2)
+                if (tickCounter >= 10 + (20 * tile.interval) * 2)
                 {
                     if (fuelLoadVertical <= 13)
                     {
@@ -255,15 +255,24 @@ public class GuiEmitter extends GuiContainer
     {
         // update and sync GUI elements with current machine state
         intervalPercent = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 200);
-        progressBar = (int) ((float) intervalPercent * 0.7F);
-        if (progressBar <= 7)
+        
+        if (intervalPercent <= 100)
         {
-            progressVertical = progressBar;
-            progressHorizontal = 0;
+            progressBar = (int) ((float) intervalPercent * 0.7F);
+            if (progressBar <= 7)
+            {
+                progressVertical = progressBar;
+                progressHorizontal = 0;
+            } else
+            {
+                progressVertical = 7;
+                progressHorizontal = progressBar - 6;
+            }
         } else
         {
             progressVertical = 7;
-            progressHorizontal = progressBar - 6;
+            progressHorizontal = 64;
+
         }
         if (intervalPercent >= 100 && intervalPercent <= 200)
         {
@@ -272,7 +281,14 @@ public class GuiEmitter extends GuiContainer
         {
             burstOffset = 0;
         }
-        guiParticle = (int) ((float) (intervalPercent - 100));
+        if (intervalPercent <= 113)
+        {
+            guiParticle = (int) ((float) (intervalPercent - 100));
+        } else
+        {
+            guiParticle = 13;
+        }
+        System.out.println("Particle is at " + guiParticle);
         if (tile.interval <= 1)
         {
             // adjust for 0 and 1 interval
