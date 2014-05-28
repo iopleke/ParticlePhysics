@@ -288,7 +288,6 @@ public class GuiEmitter extends GuiContainer
         {
             guiParticle = 13;
         }
-        System.out.println("Particle is at " + guiParticle);
         if (tile.interval <= 1)
         {
             // adjust for 0 and 1 interval
