@@ -132,7 +132,7 @@ public class GuiEmitter extends GuiContainer
                     }
                 }
             }
-            if (tile.fuelStored != 0)
+            if (tile.inventory[0] != null)
             {
                 drawTexturedModalRect(guiLeft + 10, guiTop + 70 - fuelLoadVertical, 191, 47 - fuelLoadVertical, 13, fuelLoadVertical);
                 drawTexturedModalRect(guiLeft + 17, guiTop + 53, 225, 13, fuelLoadhorizontal, 8);
