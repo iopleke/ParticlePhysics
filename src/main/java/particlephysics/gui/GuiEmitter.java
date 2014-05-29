@@ -51,7 +51,7 @@ public class GuiEmitter extends GuiContainer
 
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-        if (tile.intervalReset > 0)
+        if (tile.intervalReset > 0  && tile.fuelStored != 0)
         {
             intervalPercent = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 200);
             progressBar = (int) ((float) intervalPercent * 0.7F);
@@ -83,7 +83,7 @@ public class GuiEmitter extends GuiContainer
         }
 
         // draw the burst
-        if (intervalPercent >= 0 && intervalPercent <= 200)
+        if (intervalPercent >= 0 && intervalPercent <= 200 && tile.fuelStored != 0)
         {
             // particle progress bar
             drawTexturedModalRect(guiLeft + 42, guiTop + 38 - progressVertical, 211, 20 - progressVertical, 5, progressVertical);
@@ -132,8 +132,11 @@ public class GuiEmitter extends GuiContainer
                     }
                 }
             }
-            drawTexturedModalRect(guiLeft + 10, guiTop + 70 - fuelLoadVertical, 191, 47 - fuelLoadVertical, 13, fuelLoadVertical);
-            drawTexturedModalRect(guiLeft + 17, guiTop + 53, 225, 13, fuelLoadhorizontal, 8);
+            if (tile.fuelStored != 0)
+            {
+                drawTexturedModalRect(guiLeft + 10, guiTop + 70 - fuelLoadVertical, 191, 47 - fuelLoadVertical, 13, fuelLoadVertical);
+                drawTexturedModalRect(guiLeft + 17, guiTop + 53, 225, 13, fuelLoadhorizontal, 8);
+            }
         } else
         {
             fuelLoadVertical = 0;
@@ -255,7 +258,7 @@ public class GuiEmitter extends GuiContainer
     {
         // update and sync GUI elements with current machine state
         intervalPercent = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 200);
-        
+
         if (intervalPercent <= 100)
         {
             progressBar = (int) ((float) intervalPercent * 0.7F);
