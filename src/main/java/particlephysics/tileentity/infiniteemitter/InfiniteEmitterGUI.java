@@ -1,42 +1,18 @@
-package particlephysics.tileentity.emitter;
+package particlephysics.tileentity.infiniteemitter;
 
-import particlephysics.utility.GUIRectangle;
-import java.util.List;
+import particlephysics.tileentity.emitter.*;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
-import particlephysics.network.PacketHandler;
 import particlephysics.entity.particle.TemplateParticle;
 
-// Thanks to VSWE for assorted bits of the code
-public class EmitterGUI extends GuiContainer
+public class InfiniteEmitterGUI extends EmitterGUI
 {
-    protected static final ResourceLocation texture = new ResourceLocation("particlephysics", "textures/gui/emitter.png");
-    private final EmitterTileEntity tile;
+    private final InfiniteEmitterTileEntity tile;
 
-    public static final int sliderLeftOffset = 38;
-    protected int intervalPercent = 0;
-    protected int progressBar = 0;
-    protected int progressVertical = 0;
-    protected int progressHorizontal = 0;
-    protected int burstOffset = 0;
-    protected int guiParticle = 0;
-    protected int fuelLoadVertical = 0;
-    protected int fuelLoadhorizontal = 0;
-    protected long oldTick = 0;
-    protected long tickCounter = 0;
-    protected int tempHeightSetting = 25;
-    protected boolean isDragging;
-
-    public static final GUIRectangle bar = new GUIRectangle(sliderLeftOffset, 15, 87, 6);
-    public static final GUIRectangle slider = new GUIRectangle(sliderLeftOffset, 12, 8, 11);
-
-    public EmitterGUI(InventoryPlayer invPlayer, EmitterTileEntity tile)
+    public InfiniteEmitterGUI(InventoryPlayer invPlayer, InfiniteEmitterTileEntity tile)
     {
-        super(new EmitterContainer(invPlayer, tile));
+        super(invPlayer, tile);
         this.tile = tile;
 
         xSize = 176;
@@ -169,133 +145,5 @@ public class EmitterGUI extends GuiContainer
             }
         }
 
-    }
-
-    public int getLeft()
-    {
-        return this.guiLeft;
-    }
-
-    public int getTop()
-    {
-        return this.guiTop;
-    }
-
-    public void drawHoverString(List l, int w, int h)
-    {
-        this.drawHoveringText(l, w, h, fontRenderer);
-    }
-
-    @Override
-    protected void actionPerformed(GuiButton button)
-    {
-        super.actionPerformed(button);
-        PacketHandler.sendInterfacePacket((byte) 0, (byte) button.id);
-
-    }
-
-    @Override
-    public void initGui()
-    {
-        super.initGui();
-        buttonList.clear();
-        GuiButton clearButton = new GuiButton(0, guiLeft + 54, guiTop + 70, 31, 20, "Dump");
-        buttonList.add(clearButton);
-
-    }
-
-    @Override
-    public void mouseClicked(int x, int y, int button)
-    {
-        super.mouseClicked(x, y, button);
-        if (slider.inRect(this, x, y))
-        {
-            isDragging = true;
-            tempHeightSetting = tile.interval;
-        }
-    }
-
-    @Override
-    public void mouseClickMove(int x, int y, int button, long timeSinceClicked)
-    {
-        super.mouseClickMove(x, y, button, timeSinceClicked);
-        if (isDragging)
-        {
-            tempHeightSetting = (x - getLeft() - sliderLeftOffset - 4);
-            if (tempHeightSetting < 0)
-            {
-                tempHeightSetting = 00;
-            }
-            if (tempHeightSetting > 79)
-            {
-                tempHeightSetting = 79;
-            }
-        }
-    }
-
-    @Override
-    public void mouseMovedOrUp(int x, int y, int button)
-    {
-        super.mouseMovedOrUp(x, y, button);
-        if (isDragging)
-        {
-            PacketHandler.sendInterfacePacket((byte) 1, (byte) tempHeightSetting);
-
-            tile.interval = tempHeightSetting;
-            this.isDragging = false;
-            this.syncGUIElements();
-        }
-    }
-
-    protected void updateSliderPosition()
-    {
-
-        slider.setX(sliderLeftOffset + (isDragging ? tempHeightSetting : tile.interval));
-    }
-
-    protected void syncGUIElements()
-    {
-        // update and sync GUI elements with current machine state
-        intervalPercent = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 200);
-
-        if (intervalPercent <= 100)
-        {
-            progressBar = (int) ((float) intervalPercent * 0.7F);
-            if (progressBar <= 7)
-            {
-                progressVertical = progressBar;
-                progressHorizontal = 0;
-            } else
-            {
-                progressVertical = 7;
-                progressHorizontal = progressBar - 6;
-            }
-        } else
-        {
-            progressVertical = 7;
-            progressHorizontal = 64;
-
-        }
-        if (intervalPercent >= 100 && intervalPercent <= 200)
-        {
-            burstOffset = (int) (((float) tile.intervalReset / (float) ((tile.interval + 1) * 20)) * 20) - 11;
-        } else
-        {
-            burstOffset = 0;
-        }
-        if (intervalPercent <= 113)
-        {
-            guiParticle = (int) ((float) (intervalPercent - 100));
-        } else
-        {
-            guiParticle = 13;
-        }
-        if (tile.interval <= 1)
-        {
-            // adjust for 0 and 1 interval
-            guiParticle = guiParticle + 3;
-        }
-        fuelLoadVertical = 0;
-        fuelLoadhorizontal = 0;
     }
 }
