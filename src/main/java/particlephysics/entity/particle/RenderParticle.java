@@ -14,8 +14,8 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import particlephysics.ParticleRegistry;
-import particlephysics.helper.BlockRenderInfo;
-import particlephysics.helper.Vector3;
+import particlephysics.utility.BlockRenderInfo;
+import particlephysics.utility.Vector3;
 
 public class RenderParticle extends Render
 {

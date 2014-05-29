@@ -13,7 +13,7 @@ import particlephysics.BetterLoader;
 import particlephysics.ModParticlePhysics;
 import particlephysics.Settings;
 import particlephysics.tileentity.emitter.EmitterTileEntity;
-import particlephysics.helper.BasicComplexBlock;
+import particlephysics.utility.BasicComplexBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 import particlephysics.tileentity.emitter.EmitterBlock;
 

@@ -1,4 +1,4 @@
-package particlephysics;
+package particlephysics.network;
 
 import net.minecraft.util.Icon;
 import particlephysics.entity.particle.TemplateParticle;

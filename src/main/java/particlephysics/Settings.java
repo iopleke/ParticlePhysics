@@ -7,7 +7,7 @@ import java.util.logging.Level;
 
 import net.minecraft.launchwrapper.LogWrapper;
 import net.minecraftforge.common.Configuration;
-import particlephysics.helper.IDManager;
+import particlephysics.utility.IDManager;
 
 public class Settings
 {

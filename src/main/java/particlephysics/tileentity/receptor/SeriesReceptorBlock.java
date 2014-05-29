@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import particlephysics.Settings;
-import particlephysics.helper.BasicComplexBlock;
+import particlephysics.utility.BasicComplexBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class SeriesReceptorBlock extends BasicComplexBlock

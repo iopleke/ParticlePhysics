@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import particlephysics.Settings;
 import particlephysics.entity.particle.TemplateParticle;
 import particlephysics.api.IParticleBouncer;
-import particlephysics.helper.BasicComplexBlock;
+import particlephysics.utility.BasicComplexBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ControlGlassBlock extends BasicComplexBlock implements IParticleBouncer

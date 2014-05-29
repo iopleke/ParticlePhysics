@@ -1,9 +1,9 @@
-package particlephysics.helper;
+package particlephysics.utility;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import particlephysics.ClientProxy;
+import particlephysics.network.ClientProxy;
 import particlephysics.ModParticlePhysics;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

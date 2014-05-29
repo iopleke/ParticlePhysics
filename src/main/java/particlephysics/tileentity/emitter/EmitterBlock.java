@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import particlephysics.ModParticlePhysics;
 import particlephysics.ParticleRegistry;
 import particlephysics.Settings;
-import particlephysics.helper.BasicComplexBlock;
+import particlephysics.utility.BasicComplexBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class EmitterBlock extends BasicComplexBlock

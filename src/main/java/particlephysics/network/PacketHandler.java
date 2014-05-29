@@ -1,4 +1,4 @@
-package particlephysics;
+package particlephysics.network;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,6 +17,7 @@ import particlephysics.tileentity.emitter.EmitterContainer;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
+import particlephysics.ModParticlePhysics;
 
 public class PacketHandler implements IPacketHandler
 {

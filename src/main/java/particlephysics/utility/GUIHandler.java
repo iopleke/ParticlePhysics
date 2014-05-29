@@ -1,4 +1,4 @@
-package particlephysics.helper;
+package particlephysics.utility;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

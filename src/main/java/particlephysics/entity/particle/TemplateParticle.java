@@ -19,7 +19,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import particlephysics.ParticleRegistry;
-import particlephysics.helper.BlockRenderInfo;
+import particlephysics.utility.BlockRenderInfo;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import particlephysics.api.IParticleBouncer;
 import particlephysics.api.IParticleReceptor;

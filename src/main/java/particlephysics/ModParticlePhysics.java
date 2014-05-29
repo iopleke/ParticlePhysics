@@ -1,10 +1,12 @@
 package particlephysics;
 
+import particlephysics.network.CommonProxy;
+import particlephysics.network.PacketHandler;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
-import particlephysics.helper.GUIHandler;
+import particlephysics.utility.GUIHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;

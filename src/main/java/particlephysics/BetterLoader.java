@@ -9,7 +9,7 @@ import particlephysics.tileentity.emitter.EmitterBlock;
 import particlephysics.tileentity.infiniteemitter.InfiniteEmitterBlock;
 import particlephysics.block.PolarizedGlassBlock;
 import particlephysics.tileentity.receptor.SeriesReceptorBlock;
-import particlephysics.helper.IBlock;
+import particlephysics.utility.IBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BetterLoader
