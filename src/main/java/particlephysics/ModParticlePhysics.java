@@ -62,7 +62,7 @@ public class ModParticlePhysics
     public static ModParticlePhysics INSTANCE;
 
     // Says where the client and server 'proxy' code is loaded.
-    @SidedProxy(clientSide = "particlephysics.ClientProxy", serverSide = "particlephysics.CommonProxy")
+    @SidedProxy(clientSide = "particlephysics.network.ClientProxy", serverSide = "particlephysics.network.CommonProxy")
     public static CommonProxy PROXY;
 
     @EventHandler
