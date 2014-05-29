@@ -12,8 +12,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import particlephysics.api.BaseParticle;
-import particlephysics.gui.ContainerEmitter;
+import particlephysics.entity.particle.TemplateParticle;
+import particlephysics.tileentity.emitter.EmitterContainer;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
@@ -48,11 +48,11 @@ public class PacketHandler implements IPacketHandler
                     if (playerEntity instanceof EntityPlayer)
                     {
                         Container container = ((EntityPlayer) playerEntity).openContainer;
-                        if (container instanceof ContainerEmitter)
+                        if (container instanceof EmitterContainer)
                         {
                             try
                             {
-                                ((ContainerEmitter) container).getMachine().receiveButton(inputStream.readByte(), inputStream.readByte());
+                                ((EmitterContainer) container).getMachine().receiveButton(inputStream.readByte(), inputStream.readByte());
                             } catch (IOException e)
                             {
 
@@ -78,9 +78,9 @@ public class PacketHandler implements IPacketHandler
                 toMove.setPosition(inputStream.readDouble(), inputStream.readDouble(), inputStream.readDouble());
                 toMove.setVelocity(inputStream.readDouble(), inputStream.readDouble(), inputStream.readDouble());
 
-                if (toMove instanceof BaseParticle)
+                if (toMove instanceof TemplateParticle)
                 {
-                    ((BaseParticle) toMove).effect = inputStream.readInt();
+                    ((TemplateParticle) toMove).effect = inputStream.readInt();
 
                 }
             }

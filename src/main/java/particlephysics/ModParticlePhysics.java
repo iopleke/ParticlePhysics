@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
-import particlephysics.gui.GuiHandler;
+import particlephysics.helper.GUIHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
@@ -114,7 +114,7 @@ public class ModParticlePhysics
         ParticleRegistry.registerEntities();
 
         LOGGER.info("Creating Custom GUI Handler...");
-        networkRegistry.registerGuiHandler(this, new GuiHandler());
+        networkRegistry.registerGuiHandler(this, new GUIHandler());
         
     }
 }

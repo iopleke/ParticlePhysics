@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import particlephysics.ParticlePhysicsTab;
-import particlephysics.api.BaseParticle;
+import particlephysics.entity.particle.TemplateParticle;
 
 public class PotentialReader extends Item
 {
@@ -29,9 +29,9 @@ public class PotentialReader extends Item
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
     {
 
-        if (entity instanceof BaseParticle)
+        if (entity instanceof TemplateParticle)
         {
-            BaseParticle particle = (BaseParticle) entity;
+            TemplateParticle particle = (TemplateParticle) entity;
             player.addChatMessage("Potential: " + particle.potential);
             return true;
         }

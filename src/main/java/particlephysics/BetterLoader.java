@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
-import particlephysics.blocks.ControlGlass;
-import particlephysics.blocks.Emitter;
-import particlephysics.blocks.InfiniteEmitter;
-import particlephysics.blocks.PolarizedGlass;
-import particlephysics.blocks.SeriesReceptor;
-import particlephysics.utils.IBlock;
+import particlephysics.block.ControlGlassBlock;
+import particlephysics.tileentity.emitter.EmitterBlock;
+import particlephysics.tileentity.infiniteemitter.InfiniteEmitterBlock;
+import particlephysics.block.PolarizedGlassBlock;
+import particlephysics.tileentity.receptor.SeriesReceptorBlock;
+import particlephysics.helper.IBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BetterLoader
@@ -20,11 +20,11 @@ public class BetterLoader
 
     public void populateClasses()
     {
-        classes.add(Emitter.class);
-        classes.add(InfiniteEmitter.class);
-        classes.add(PolarizedGlass.class);
-        classes.add(SeriesReceptor.class);
-        classes.add(ControlGlass.class);
+        classes.add(EmitterBlock.class);
+        classes.add(InfiniteEmitterBlock.class);
+        classes.add(PolarizedGlassBlock.class);
+        classes.add(SeriesReceptorBlock.class);
+        classes.add(ControlGlassBlock.class);
     }
 
     public void loadBlocks()
