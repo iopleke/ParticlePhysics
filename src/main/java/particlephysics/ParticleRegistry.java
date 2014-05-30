@@ -5,20 +5,20 @@ import java.util.Hashtable;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
-import particlephysics.api.BaseParticle;
-import particlephysics.entity.BlankParticle;
-import particlephysics.entity.BlazepowderParticle;
-import particlephysics.entity.CharcoalParticle;
-import particlephysics.entity.ClayParticle;
-import particlephysics.entity.CoalParticle;
-import particlephysics.entity.ConcentratedParticle;
-import particlephysics.entity.GlassParticle;
-import particlephysics.entity.GunpowderParticle;
-import particlephysics.entity.LeafParticle;
-import particlephysics.entity.PaperParticle;
-import particlephysics.entity.SandParticle;
-import particlephysics.entity.SeedParticle;
-import particlephysics.entity.SplitParticle;
+import particlephysics.entity.particle.TemplateParticle;
+import particlephysics.entity.particle.BlankParticle;
+import particlephysics.entity.particle.BlazepowderParticle;
+import particlephysics.entity.particle.CharcoalParticle;
+import particlephysics.entity.particle.ClayParticle;
+import particlephysics.entity.particle.CoalParticle;
+import particlephysics.entity.particle.ConcentratedParticle;
+import particlephysics.entity.particle.GlassParticle;
+import particlephysics.entity.particle.GunpowderParticle;
+import particlephysics.entity.particle.LeafParticle;
+import particlephysics.entity.particle.PaperParticle;
+import particlephysics.entity.particle.SandParticle;
+import particlephysics.entity.particle.SeedParticle;
+import particlephysics.entity.particle.SplitParticle;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class ParticleRegistry
@@ -50,13 +50,13 @@ public class ParticleRegistry
 
         for (int i = 0; i < particles.size(); i++)
         {
-            Icon particleIcon = register.registerIcon(ModParticlePhysics.ID + ":" + particles.get(i).getName().substring("particlephysics.entity.".length()));
+            Icon particleIcon = register.registerIcon(ModParticlePhysics.ID + ":" + particles.get(i).getName().substring("particlephysics.entity.particle.".length()));
             icons.put(particles.get(i), particleIcon);
         }
 
     }
 
-    public static Icon getIconFromInstance(BaseParticle particle)
+    public static Icon getIconFromInstance(TemplateParticle particle)
     {
         for (int i = 0; i < particles.size(); i++)
         {

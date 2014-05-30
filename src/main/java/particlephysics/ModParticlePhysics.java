@@ -1,10 +1,12 @@
 package particlephysics;
 
+import particlephysics.network.CommonProxy;
+import particlephysics.network.PacketHandler;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
-import particlephysics.gui.GuiHandler;
+import particlephysics.utility.GUIHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
@@ -60,7 +62,7 @@ public class ModParticlePhysics
     public static ModParticlePhysics INSTANCE;
 
     // Says where the client and server 'proxy' code is loaded.
-    @SidedProxy(clientSide = "particlephysics.ClientProxy", serverSide = "particlephysics.CommonProxy")
+    @SidedProxy(clientSide = "particlephysics.network.ClientProxy", serverSide = "particlephysics.network.CommonProxy")
     public static CommonProxy PROXY;
 
     @EventHandler
@@ -114,7 +116,7 @@ public class ModParticlePhysics
         ParticleRegistry.registerEntities();
 
         LOGGER.info("Creating Custom GUI Handler...");
-        networkRegistry.registerGuiHandler(this, new GuiHandler());
+        networkRegistry.registerGuiHandler(this, new GUIHandler());
         
     }
 }
