@@ -8,4 +8,4 @@ The basic principles can be seen in [BevoLJ's showcase of Minechem and Particle 
 
 Particle Physics is licensed under the [DBaJ non-commercial care-free license](https://github.com/jakimfett/AlchemyPlusPlus/blob/master/LICENSE.md).
 
-More information about Particle Physics (and why it was split off from Minechem) can be found on the [Particle Phisics page](http://jakimfett.com/particle-physics/).
+More information about Particle Physics (and why it was split off from Minechem) can be found on the [Particle Physics page](http://jakimfett.com/minecraft/particle-physics/).
