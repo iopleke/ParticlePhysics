@@ -1,28 +1,28 @@
 package particlephysics.entity.particle;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import particlephysics.ParticleRegistry;
-import particlephysics.utility.BlockRenderInfo;
-import cpw.mods.fml.common.network.PacketDispatcher;
 import particlephysics.api.IParticleBouncer;
 import particlephysics.api.IParticleReceptor;
+import particlephysics.network.MessageHandler;
+import particlephysics.network.message.MessageParticleUpdate;
+import particlephysics.utility.BlockRenderInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public abstract class TemplateParticle extends EntityLivingBase
 {
@@ -39,7 +39,7 @@ public abstract class TemplateParticle extends EntityLivingBase
     public ForgeDirection movementDirection;
 
     public int effect = 0;
-    public static Icon icon;
+    public static IIcon icon;
 
     public TemplateParticle(World par1World)
     {
@@ -68,7 +68,7 @@ public abstract class TemplateParticle extends EntityLivingBase
         ArrayList<ForgeDirection> freeDirections = new ArrayList<ForgeDirection>();
         for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS)
         {
-            if (dir.getOpposite() != forward && worldObj.getBlockId(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ) == 0)
+            if (dir.getOpposite() != forward && worldObj.isAirBlock(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ))
             {
                 freeDirections.add(dir);
             }
@@ -115,44 +115,12 @@ public abstract class TemplateParticle extends EntityLivingBase
 
     }
 
-    @Override
-    public ItemStack getCurrentItemOrArmor(int i)
-    {
-        return null;
-    }
-
     public void sendCompletePositionUpdate()
     {
         if (!worldObj.isRemote)
         {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
-            DataOutputStream outputStream = new DataOutputStream(bos);
-            try
-            {
-                outputStream.writeByte(0);
-                outputStream.writeInt(this.entityId);
-                outputStream.writeDouble(this.posX);
-                outputStream.writeDouble(this.posY);
-
-                outputStream.writeDouble(this.posZ);
-
-                outputStream.writeDouble(this.motionX);
-                outputStream.writeDouble(this.motionY);
-
-                outputStream.writeDouble(this.motionZ);
-
-                outputStream.writeInt(this.effect);
-            }
-            catch (Exception ex)
-            {
-                ex.printStackTrace();
-            }
-
-            Packet250CustomPayload packet = new Packet250CustomPayload();
-            packet.channel = "Particle";
-            packet.data = bos.toByteArray();
-            packet.length = bos.size();
-            PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 30, this.worldObj.provider.dimensionId, packet);
+            MessageParticleUpdate message = new MessageParticleUpdate(this, this.effect);
+            MessageHandler.INSATNCE.sendToAllAround(message, new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, posX, posY, posZ, 30));
         }
     }
 
@@ -205,16 +173,16 @@ public abstract class TemplateParticle extends EntityLivingBase
             int targetY = MathHelper.floor_double(posY + (0.5 * forward.offsetY));
 
             int targetZ = MathHelper.floor_double(posZ + (0.5 * forward.offsetZ));
-            int id = worldObj.getBlockId(targetX, targetY, targetZ);
+            Block block = worldObj.getBlock(targetX, targetY, targetZ);
             boolean isReflective = false;
-            if (Block.blocksList[id] instanceof IParticleBouncer)
+            if (block instanceof IParticleBouncer)
             {
 
-                isReflective = ((IParticleBouncer) Block.blocksList[id]).canBounce(worldObj, targetX, targetY, targetZ, this);
+                isReflective = ((IParticleBouncer) block).canBounce(worldObj, targetX, targetY, targetZ, this);
 
             }
 
-            if (id == Block.glass.blockID || isReflective)
+            if (block == Blocks.glass || isReflective)
             {
                 this.bounce(targetX, targetY, targetZ, forward);
             }
@@ -222,7 +190,7 @@ public abstract class TemplateParticle extends EntityLivingBase
             {
                 // Polarized glass
                 // Magic numbers are fun!
-                TileEntity entity = worldObj.getBlockTileEntity(targetX, targetY, targetZ);
+                TileEntity entity = worldObj.getTileEntity(targetX, targetY, targetZ);
                 if (entity instanceof IParticleReceptor)
                 {
                     ((IParticleReceptor) entity).onContact(this);
@@ -238,6 +206,12 @@ public abstract class TemplateParticle extends EntityLivingBase
 
     @Override
     public ItemStack getHeldItem()
+    {
+        return null;
+    }
+
+    @Override
+    public ItemStack getEquipmentInSlot(int slot)
     {
         return null;
     }
@@ -335,11 +309,11 @@ public abstract class TemplateParticle extends EntityLivingBase
             if (this.onGround)
             {
                 f2 = 0.54600006F;
-                int j = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
+                Block block = this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
 
-                if (j > 0)
+                if (block != Blocks.air)
                 {
-                    f2 = Block.blocksList[j].slipperiness * 0.91F;
+                    f2 = block.slipperiness * 0.91F;
                 }
             }
 

@@ -1,30 +1,30 @@
 package particlephysics.utility;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import particlephysics.network.ClientProxy;
-import particlephysics.ModParticlePhysics;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import particlephysics.ModParticlePhysics;
+import particlephysics.proxy.ClientProxy;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class BasicComplexBlock extends Block implements IBlock
 {
 
-    public Icon connectorIcon;
-    public Icon topIcon;
+    public IIcon connectorIcon;
+    public IIcon topIcon;
     static int blockIdIncrement;
     public String textureBase = ModParticlePhysics.ID + ":";
 
@@ -49,19 +49,19 @@ public abstract class BasicComplexBlock extends Block implements IBlock
         return false;
     }
 
-    public BasicComplexBlock(int id, Material material)
+    public BasicComplexBlock(Material material)
     {
-        super(id, material);
+        super(material);
 
-        this.setUnlocalizedName(this.getName());
+        this.setBlockName(this.getName());
 
     }
 
-    public BasicComplexBlock(int id)
+    public BasicComplexBlock()
     {
-        super(id, Material.iron);
+        super(Material.iron);
 
-        this.setUnlocalizedName(this.getName());
+        this.setBlockName(this.getName());
 
     }
 
@@ -74,10 +74,10 @@ public abstract class BasicComplexBlock extends Block implements IBlock
     public abstract void addStacksDroppedOnBlockBreak(TileEntity tileEntity, ArrayList<ItemStack> itemStacks);
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, int oldBlockId, int oldMetadata)
+    public void breakBlock(World world, int x, int y, int z, Block oldBlock, int oldMetadata)
     {
         Random random = new Random();
-        TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
         if (tileEntity != null)
         {
             ArrayList<ItemStack> droppedStacks = new ArrayList<ItemStack>();
@@ -93,7 +93,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
                     if (randomN > itemstack.stackSize)
                         randomN = itemstack.stackSize;
                     itemstack.stackSize -= randomN;
-                    ItemStack droppedStack = new ItemStack(itemstack.itemID, randomN, itemstack.getItemDamage());
+                    ItemStack droppedStack = new ItemStack(itemstack.getItem(), randomN, itemstack.getItemDamage());
                     // Copy NBT tag data, needed to preserve Chemist Journal
                     // contents (for example).
                     if (itemstack.hasTagCompound())
@@ -105,7 +105,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
                     world.spawnEntityInWorld(droppedEntityItem);
                 }
             }
-            super.breakBlock(world, x, y, z, oldBlockId, oldMetadata);
+            super.breakBlock(world, x, y, z, oldBlock, oldMetadata);
         }
 
     }
@@ -123,7 +123,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerBlockIcons(IIconRegister par1IconRegister)
     {
 
         blockIcon = par1IconRegister.registerIcon(textureBase + this.getFront());
@@ -131,7 +131,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
     }
 
     @Override
-    public Icon getIcon(int side, int meta)
+    public IIcon getIcon(int side, int meta)
     {
         if (topSidedTextures())
         {
@@ -168,7 +168,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
             break;
         }
         par1World.setBlockMetadataWithNotify(x, y, z, change, 2);
-        par1World.notifyBlocksOfNeighborChange(x, y, z, this.blockID);
+        par1World.notifyBlocksOfNeighborChange(x, y, z, this);
     }
 
     @Override
@@ -183,7 +183,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        ModParticlePhysics.LOGGER.severe("Error while creating tile entity");
+        ModParticlePhysics.LOGGER.fatal("Error while creating tile entity");
         return null;
 
     }

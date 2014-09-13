@@ -2,7 +2,6 @@ package pixlepix.minechem.common.utils;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-
 import org.easymock.EasyMock;
 import org.easymock.IArgumentMatcher;
 

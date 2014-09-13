@@ -1,16 +1,15 @@
 package particlephysics;
 
-import java.util.ArrayList;
-
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraftforge.common.MinecraftForge;
 import particlephysics.block.ControlGlassBlock;
+import particlephysics.block.PolarizedGlassBlock;
 import particlephysics.tileentity.emitter.EmitterBlock;
 import particlephysics.tileentity.infiniteemitter.InfiniteEmitterBlock;
-import particlephysics.block.PolarizedGlassBlock;
 import particlephysics.tileentity.receptor.SeriesReceptorBlock;
 import particlephysics.utility.IBlock;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import java.util.ArrayList;
 
 public class BetterLoader
 {
@@ -39,7 +38,7 @@ public class BetterLoader
 
                 Class currentClass = classes.get(i);
                 Class clazz = currentClass;
-                Block newBlock = ((Block) clazz.newInstance()).setHardness(0.5F).setStepSound(Block.soundAnvilFootstep);
+                Block newBlock = ((Block) clazz.newInstance()).setHardness(0.5F).setStepSound(Block.soundTypeAnvil);
                 if (((IBlock) newBlock).inCreativeTab())
                 {
                     newBlock.setCreativeTab(ModParticlePhysics.CREATIVE_TAB);
@@ -68,7 +67,7 @@ public class BetterLoader
             }
         }
         
-        ModParticlePhysics.LOGGER.severe("Failed to find block in BetterLoader. Crash incoming.");
+        ModParticlePhysics.LOGGER.fatal("Failed to find block in BetterLoader. Crash incoming.");
         return null;
     }
 
@@ -82,7 +81,8 @@ public class BetterLoader
             if (currentBlock instanceof IBlock)
             {
                 IBlock currentIBlock = (IBlock) currentBlock;
-                MinecraftForge.setBlockHarvestLevel(currentBlock, "pickaxe", 0);
+                currentBlock.setHarvestLevel("pickaxe", 0);
+
                 if (currentIBlock.getItemBlock() != null)
                 {
                     GameRegistry.registerBlock(currentBlock, currentIBlock.getItemBlock(), currentIBlock.getName());

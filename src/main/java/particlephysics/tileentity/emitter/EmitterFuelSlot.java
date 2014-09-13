@@ -18,7 +18,7 @@ public class EmitterFuelSlot extends Slot
     @Override
     public boolean isItemValid(ItemStack stack)
     {
-        return emitter.isValidFuel(stack.itemID);
+        return emitter.isValidFuel(stack);
     }
 
 }

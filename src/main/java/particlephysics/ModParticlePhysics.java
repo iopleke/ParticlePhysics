@@ -1,26 +1,21 @@
 package particlephysics;
 
-import particlephysics.network.CommonProxy;
-import particlephysics.network.PacketHandler;
-import java.util.Arrays;
-import java.util.logging.Logger;
-
-import net.minecraftforge.common.Configuration;
-import particlephysics.utility.GUIHandler;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraftforge.common.config.Configuration;
+import org.apache.logging.log4j.Logger;
+import particlephysics.proxy.CommonProxy;
+import particlephysics.utility.GUIHandler;
+
+import java.util.Arrays;
 
 @Mod(modid = ModParticlePhysics.ID, name = ModParticlePhysics.NAME, version = ModParticlePhysics.VERSION_FULL, useMetadata = false, acceptedMinecraftVersions = "[1.6.4,)", dependencies = "required-after:Forge@[9.11.1.953,);after:BuildCraft|Energy;after:factorization;after:IC2;after:Railcraft;after:ThermalExpansion;after:minechem")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels =
-{ ModParticlePhysics.CHANNEL_NAME }, packetHandler = PacketHandler.class)
 public class ModParticlePhysics
 {
     /** Internal mod name used for reference purposes and resource gathering. **/
@@ -34,7 +29,7 @@ public class ModParticlePhysics
     public static final String V_MINOR = "@MINOR@";
     public static final String V_REVIS = "@REVIS@";
     public static final String V_BUILD = "@BUILD@";
-    public static final String VERSION_FULL = V_MAJOR + "." + V_MINOR + V_REVIS + "." + V_BUILD;
+    public static final String VERSION_FULL = V_MAJOR + "." + V_MINOR + "." + V_REVIS + "." + V_BUILD;
 
     /** User friendly version of our mods name. **/
     public static final String NAME = "Particle Physics";
@@ -62,7 +57,7 @@ public class ModParticlePhysics
     public static ModParticlePhysics INSTANCE;
 
     // Says where the client and server 'proxy' code is loaded.
-    @SidedProxy(clientSide = "particlephysics.network.ClientProxy", serverSide = "particlephysics.network.CommonProxy")
+    @SidedProxy(clientSide = "particlephysics.proxy.ClientProxy", serverSide = "particlephysics.proxy.CommonProxy")
     public static CommonProxy PROXY;
 
     @EventHandler
@@ -73,12 +68,10 @@ public class ModParticlePhysics
 
         // Setup logging.
         LOGGER = event.getModLog();
-        LOGGER.setParent(FMLLog.getLogger());
 
         // Load configuration.
         LOGGER.info("Loading configuration...");
-        CONFIG = new Configuration(event.getSuggestedConfigurationFile());
-        Settings.load(CONFIG);
+        Settings.init(event.getSuggestedConfigurationFile());
         
         // Setup Mod Metadata for players to see in mod list with other mods.
         metadata.modId = ModParticlePhysics.ID;
@@ -109,14 +102,11 @@ public class ModParticlePhysics
         LOGGER.info("Starting BetterLoader mainLoad()...");
         LOADER.mainload();
 
-        LOGGER.info("Creating NetworkRegistry...");
-        NetworkRegistry networkRegistry = NetworkRegistry.instance();
-
         LOGGER.info("Registering all Entities...");
         ParticleRegistry.registerEntities();
 
         LOGGER.info("Creating Custom GUI Handler...");
-        networkRegistry.registerGuiHandler(this, new GUIHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GUIHandler());
         
     }
 }

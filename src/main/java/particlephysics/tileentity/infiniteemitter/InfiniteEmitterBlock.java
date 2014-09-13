@@ -1,32 +1,32 @@
 package particlephysics.tileentity.infiniteemitter;
 
-import java.util.ArrayList;
-
-import net.minecraft.block.Block;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import particlephysics.BetterLoader;
 import particlephysics.ModParticlePhysics;
-import particlephysics.Settings;
-import particlephysics.utility.BasicComplexBlock;
-import cpw.mods.fml.common.registry.GameRegistry;
 import particlephysics.tileentity.emitter.EmitterBlock;
+import particlephysics.utility.BasicComplexBlock;
+
+import java.util.ArrayList;
 
 public class InfiniteEmitterBlock extends BasicComplexBlock
 {
 
     public InfiniteEmitterBlock()
     {
-        super(Settings.InfiniteEmitter);
+        super();
     }
 
-    public InfiniteEmitterBlock(int i)
+    public InfiniteEmitterBlock(Material material)
     {
-        super(i);
+        super(material);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class InfiniteEmitterBlock extends BasicComplexBlock
     @Override
     public void addRecipe()
     {
-        GameRegistry.addRecipe(new ItemStack(this), "XYX", "YZY", "XYX", 'X', new ItemStack(Block.blockLapis), 'Y', new ItemStack(Item.diamond), 'Z', new ItemStack(BetterLoader.getBlock(EmitterBlock.class)));
+        GameRegistry.addRecipe(new ItemStack(this), "XYX", "YZY", "XYX", 'X', new ItemStack(Blocks.lapis_block), 'Y', new ItemStack(Items.diamond), 'Z', new ItemStack(BetterLoader.getBlock(EmitterBlock.class)));
 
     }
 
@@ -103,7 +103,7 @@ public class InfiniteEmitterBlock extends BasicComplexBlock
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ)
     {
 
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof InfiniteEmitterTileEntity)
         {
             entityPlayer.openGui(ModParticlePhysics.INSTANCE, 0, world, x, y, z);

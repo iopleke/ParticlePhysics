@@ -1,8 +1,7 @@
 package particlephysics.entity.particle;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -10,12 +9,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
 import org.lwjgl.opengl.GL11;
-
 import particlephysics.ParticleRegistry;
 import particlephysics.utility.BlockRenderInfo;
 import particlephysics.utility.Vector3;
+
+import java.util.Random;
 
 public class RenderParticle extends Render
 {
@@ -82,9 +81,9 @@ public class RenderParticle extends Render
                     lightY = (int) (Math.floor(entity.posY) + jBase);
                     lightZ = (int) (Math.floor(entity.posZ) + kBase);
 
-                    GL11.glDisable(2896 /* GL_LIGHTING */);
+                    GL11.glDisable(GL11.GL_LIGHTING);
                     renderBlock(util, world, new Vector3(lightX, lightY, lightZ));
-                    GL11.glEnable(2896 /* GL_LIGHTING */);
+                    GL11.glEnable(GL11.GL_LIGHTING);
 
                     GL11.glPopMatrix();
 
@@ -101,6 +100,7 @@ public class RenderParticle extends Render
      */
     public void renderBlock(BlockRenderInfo blockInterface, IBlockAccess world, Vector3 vec)
     {
+        RenderBlocks renderBlocks = field_147909_c;
         renderBlocks.renderMaxX = blockInterface.max.x;
         renderBlocks.renderMinX = blockInterface.min.x;
         renderBlocks.renderMaxY = blockInterface.max.y;

@@ -1,7 +1,6 @@
 package particlephysics.utility;
 
-import java.util.List;
-
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -11,7 +10,9 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.List;
 
 // Written by calclavia
 // Taken from UE for legacy code
@@ -133,9 +134,9 @@ public class Vector3 implements Cloneable
      * 
      * @param world
      * @return */
-    public int getBlockID(IBlockAccess world)
+    public Block getBlock(IBlockAccess world)
     {
-        return world.getBlockId(this.intX(), this.intY(), this.intZ());
+        return world.getBlock(this.intX(), this.intY(), this.intZ());
     }
 
     public int getBlockMetadata(IBlockAccess world)
@@ -145,22 +146,22 @@ public class Vector3 implements Cloneable
 
     public TileEntity getTileEntity(IBlockAccess world)
     {
-        return world.getBlockTileEntity(this.intX(), this.intY(), this.intZ());
+        return world.getTileEntity(this.intX(), this.intY(), this.intZ());
     }
 
-    public boolean setBlock(World world, int id, int metadata, int notify)
+    public boolean setBlock(World world, Block block, int metadata, int notify)
     {
-        return world.setBlock(this.intX(), this.intY(), this.intZ(), id, metadata, notify);
+        return world.setBlock(this.intX(), this.intY(), this.intZ(), block, metadata, notify);
     }
 
-    public boolean setBlock(World world, int id, int metadata)
+    public boolean setBlock(World world, Block block, int metadata)
     {
-        return this.setBlock(world, id, metadata, 3);
+        return this.setBlock(world, block, metadata, 3);
     }
 
-    public boolean setBlock(World world, int id)
+    public boolean setBlock(World world, Block block)
     {
-        return this.setBlock(world, id, 0);
+        return this.setBlock(world, block, 0);
     }
 
     /** Converts this vector three into a Minecraft Vec3 object */
@@ -413,8 +414,7 @@ public class Vector3 implements Cloneable
     }
 
     /** Gets a position relative to a position's side
-     * 
-     * @param position - The position
+     *
      * @param side - The side. 0-5
      * @return The position relative to the original position's side */
     public Vector3 modifyPositionFromSide(ForgeDirection side, double amount)
@@ -605,8 +605,7 @@ public class Vector3 implements Cloneable
     }
 
     /** Saves this Vector3 to disk
-     * 
-     * @param prefix - The prefix of this save. Use some unique string.
+     *
      * @param nbt - The NBT compound object to save the data in */
     public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
@@ -683,7 +682,7 @@ public class Vector3 implements Cloneable
     {
         Vector3 lookVector = Vector3.getDeltaPositionFromRotation(rotationYaw, rotationPitch);
         Vector3 reachPoint = this.clone().translate(lookVector.clone().scale(reachDistance));
-        return world.rayTraceBlocks_do_do(this.toVec3(), reachPoint.toVec3(), collisionFlag, !collisionFlag);
+        return world.rayTraceBlocks(this.toVec3(), reachPoint.toVec3(), collisionFlag);
     }
 
     @Deprecated
@@ -711,7 +710,7 @@ public class Vector3 implements Cloneable
         Vec3 reachPoint = Vec3.createVectorHelper(startingPosition.xCoord + look.xCoord * reachDistance, startingPosition.yCoord + look.yCoord * reachDistance, startingPosition.zCoord + look.zCoord * reachDistance);
 
         double checkBorder = 1.1 * reachDistance;
-        AxisAlignedBB boxToScan = AxisAlignedBB.getAABBPool().getAABB(-checkBorder, -checkBorder, -checkBorder, checkBorder, checkBorder, checkBorder).offset(this.x, this.y, this.z);
+        AxisAlignedBB boxToScan = AxisAlignedBB.getBoundingBox(-checkBorder, -checkBorder, -checkBorder, checkBorder, checkBorder, checkBorder).offset(this.x, this.y, this.z);
 
         @SuppressWarnings("unchecked")
         List<Entity> entitiesHit = world.getEntitiesWithinAABBExcludingEntity(null, boxToScan);

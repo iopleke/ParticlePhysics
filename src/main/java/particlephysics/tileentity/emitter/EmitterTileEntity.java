@@ -1,28 +1,15 @@
 package particlephysics.tileentity.emitter;
 
-import minechem.api.core.EnumElement;
-import minechem.api.core.EnumMolecule;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
-import particlephysics.Settings;
+import net.minecraftforge.common.util.ForgeDirection;
+import particlephysics.entity.particle.CoalParticle;
 import particlephysics.entity.particle.TemplateParticle;
 import particlephysics.tileentity.infiniteemitter.InfiniteEmitterBlock;
-import particlephysics.entity.particle.BlazepowderParticle;
-import particlephysics.entity.particle.CharcoalParticle;
-import particlephysics.entity.particle.ClayParticle;
-import particlephysics.entity.particle.CoalParticle;
-import particlephysics.entity.particle.GlassParticle;
-import particlephysics.entity.particle.GunpowderParticle;
-import particlephysics.entity.particle.LeafParticle;
-import particlephysics.entity.particle.PaperParticle;
-import particlephysics.entity.particle.SandParticle;
-import particlephysics.entity.particle.SeedParticle;
 
 public class EmitterTileEntity extends TileEntity implements IInventory
 {
@@ -45,12 +32,12 @@ public class EmitterTileEntity extends TileEntity implements IInventory
             {
                 if (this.inventory != null)
                 {
-                    if (this.inventory[0] != null && isValidFuel(this.inventory[0].itemID))
+                    if (this.inventory[0] != null && isValidFuel(this.inventory[0]))
                     {
                         // TODO: Get fuel amount from ItemMolecule.getSize() * 100;
                         this.fuelStored = 100;
 
-                        this.fuelType = this.inventory[0].itemID;
+                        this.fuelType = 0;
 
                         // to my future self
                         // when you refactor this code
@@ -63,7 +50,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
                             for (int i = 1; i < getSizeInventory(); i++)
                             {
                                 ItemStack item = getStackInSlot(i);
-                                if (item != null && this.isValidFuel(item.itemID))
+                                if (item != null && this.isValidFuel(item))
                                 {
                                     this.setInventorySlotContents(0, item);
                                     this.setInventorySlotContents(i, null);
@@ -76,7 +63,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
             }
             if (fuelStored > 0)
             {
-                if (!(Block.blocksList[worldObj.getBlockId(xCoord, yCoord, zCoord)] instanceof InfiniteEmitterBlock && getStackInSlot(0) != null && getStackInSlot(0).stackSize >= 63))
+                if (!(worldObj.getBlock(xCoord, yCoord, zCoord) instanceof InfiniteEmitterBlock && getStackInSlot(0) != null && getStackInSlot(0).stackSize >= 63))
                 {
                     this.fuelStored--;
                 }
@@ -103,67 +90,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
     public TemplateParticle getParticleFromFuel(int fuel, int meta)
     {
-        // Adjust for the ID offset
-        fuel = fuel - 256;
-        
-        if (fuel == Settings.MinechemElement)
-        {
-            if (meta == EnumElement.C.ordinal())
-            {
-                return new CoalParticle(worldObj);
-            }
-
-            if (meta == EnumElement.H.ordinal())
-            {
-                return new CharcoalParticle(worldObj);
-            }
-
-            if (meta == EnumElement.O.ordinal())
-            {
-                return new LeafParticle(worldObj);
-            }
-
-            if (meta == EnumElement.Si.ordinal())
-            {
-                return new GlassParticle(worldObj);
-            }
-
-            if (meta == EnumElement.Pu.ordinal())
-            {
-                return new BlazepowderParticle(worldObj);
-            }
-
-        }
-
-        if (fuel == Settings.MinechemMolecule)
-        {
-            if (meta == EnumMolecule.cellulose.ordinal())
-            {
-                return new PaperParticle(worldObj);
-            }
-
-            if (meta == EnumMolecule.kaolinite.ordinal())
-            {
-                return new ClayParticle(worldObj);
-            }
-
-            if (meta == EnumMolecule.nod.ordinal())
-            {
-                return new SeedParticle(worldObj);
-            }
-
-            if (meta == EnumMolecule.siliconDioxide.ordinal())
-            {
-                return new SandParticle(worldObj);
-            }
-
-            if (meta == EnumMolecule.potassiumNitrate.ordinal())
-            {
-                return new GunpowderParticle(worldObj);
-            }
-
-        }
-        return null;
+        return new CoalParticle(this.worldObj);
     }
 
     @Override
@@ -175,10 +102,10 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         this.fuelType = nbt.getInteger("FuelType");
         this.interval = nbt.getInteger("Interval");
         this.fuelMeta = nbt.getInteger("FuelMeta");
-        NBTTagList tagList = nbt.getTagList("Inventory");
+        NBTTagList tagList = nbt.getTagList("Inventory", 0);
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound compound = (NBTTagCompound) tagList.tagAt(i);
+            NBTTagCompound compound = tagList.getCompoundTagAt(i);
             int slot = compound.getInteger("Slot");
             inventory[slot] = ItemStack.loadItemStackFromNBT(compound);
         }
@@ -235,8 +162,6 @@ public class EmitterTileEntity extends TileEntity implements IInventory
                 itemstack = itemstack.splitStack(j);
             }
         }
-
-        onInventoryChanged();
         return itemstack;
     }
 
@@ -252,17 +177,16 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     public void setInventorySlotContents(int i, ItemStack itemStack)
     {
         this.inventory[i] = itemStack;
-        this.onInventoryChanged();
     }
 
     @Override
-    public String getInvName()
+    public String getInventoryName()
     {
-        return "Emitter";
+        return "emitter";
     }
 
     @Override
-    public boolean isInvNameLocalized()
+    public boolean hasCustomInventoryName()
     {
         return false;
     }
@@ -280,13 +204,13 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     }
 
     @Override
-    public void openChest()
+    public void openInventory()
     {
 
     }
 
     @Override
-    public void closeChest()
+    public void closeInventory()
     {
 
     }
@@ -294,19 +218,15 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack)
     {
-        return isValidFuel(itemstack.itemID);
+        return isValidFuel(itemstack);
     }
 
-    public boolean isValidFuel(int itemstack)
+    public boolean isValidFuel(ItemStack itemstack)
     {
-        // an unpleasant hack
-        // keeps compatibility
-        // like well worn old boots
-        itemstack = itemstack - 256;
-        return (itemstack == Settings.MinechemMolecule || itemstack == Settings.MinechemElement);
+        return true;
     }
 
-    public void receiveButton(byte type, byte value)
+    public void receiveButton(int type, int value)
     {
         switch (type)
         {

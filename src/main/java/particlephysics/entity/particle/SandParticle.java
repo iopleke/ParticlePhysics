@@ -1,7 +1,7 @@
 package particlephysics.entity.particle;
 
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import particlephysics.utility.CoordTuple;
 
 public class SandParticle extends TemplateParticle
@@ -45,7 +45,7 @@ public class SandParticle extends TemplateParticle
         genLeft--;
         SandParticle reflectedParticle = new SandParticle(this.worldObj);
         reflectedParticle.genLeft = this.genLeft;
-        ForgeDirection dir = this.movementDirection.getOpposite();
+        ForgeDirection dir = this.movementDirection;
         reflectedParticle.setVelocity(dir.offsetX, dir.offsetY, dir.offsetZ);
         reflectedParticle.setPosition(this.posX, this.posY, this.posZ);
         worldObj.spawnEntityInWorld(reflectedParticle);

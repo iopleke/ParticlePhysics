@@ -1,8 +1,8 @@
 package particlephysics.entity.particle;
 
-import java.lang.reflect.InvocationTargetException;
-
 import net.minecraft.world.World;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class BlankParticle extends TemplateParticle
 {

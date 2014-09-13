@@ -1,6 +1,7 @@
 package particlephysics;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import particlephysics.tileentity.emitter.EmitterBlock;
 
@@ -11,7 +12,6 @@ public class ParticlePhysicsTab extends CreativeTabs
     public ParticlePhysicsTab()
     {
         super("tabParticlePhysics");
-
         instance = this;
     }
 
@@ -20,5 +20,11 @@ public class ParticlePhysicsTab extends CreativeTabs
     {
         return new ItemStack(BetterLoader.getBlock(EmitterBlock.class));
 
+    }
+
+    @Override
+    public Item getTabIconItem()
+    {
+        return null;
     }
 }
