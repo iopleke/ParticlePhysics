@@ -1,32 +1,5 @@
 package pixlepix.minechem.common.blocks;
 
-import static org.junit.Assert.fail;
-import pixlepix.minechem.api.core.EnumElement;
-import pixlepix.minechem.common.items.ItemChemistJournal;
-import pixlepix.minechem.common.items.ItemElement;
-import pixlepix.minechem.common.items.ItemTestTube;
-import pixlepix.minechem.common.tileentity.TileEntitySynthesis;
-import pixlepix.minechem.utils.test.EntityItemMatcher;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.logging.ILogAgent;
-import net.minecraft.profiler.Profiler;
-import net.minecraft.stats.StatList;
-import net.minecraft.world.EnumGameType;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldSettings;
-import net.minecraft.world.WorldType;
-import net.minecraft.world.storage.ISaveHandler;
-
-import org.easymock.EasyMock;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.easymock.PowerMock;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ICrashCallable;
 import cpw.mods.fml.common.Loader;
@@ -34,6 +7,28 @@ import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.FMLInjectionData;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.logging.ILogAgent;
+import net.minecraft.profiler.Profiler;
+import net.minecraft.stats.StatList;
+import net.minecraft.world.*;
+import net.minecraft.world.storage.ISaveHandler;
+import org.easymock.EasyMock;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import pixlepix.minechem.api.core.EnumElement;
+import pixlepix.minechem.common.items.ItemChemistJournal;
+import pixlepix.minechem.common.items.ItemElement;
+import pixlepix.minechem.common.items.ItemTestTube;
+import pixlepix.minechem.common.tileentity.TileEntitySynthesis;
+import pixlepix.minechem.utils.test.EntityItemMatcher;
+
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for BlockSynthesis (chemical synthesis machine).

@@ -1,7 +1,6 @@
 package particlephysics.tileentity.infiniteemitter;
 
-import net.minecraft.block.Block;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import particlephysics.entity.particle.TemplateParticle;
 import particlephysics.tileentity.emitter.EmitterTileEntity;
 
@@ -15,12 +14,12 @@ public class InfiniteEmitterTileEntity extends EmitterTileEntity
         {
             if (this.inventory != null)
             {
-                if (this.inventory[0] != null && isValidFuel(this.inventory[0].itemID))
+                if (this.inventory[0] != null && isValidFuel(this.inventory[0]))
                 {
                     // TODO: Get fuel amount from ItemMolecule.getSize() * 100;
                     this.fuelStored = 100;
 
-                    this.fuelType = this.inventory[0].itemID;
+                    this.fuelType = 0;
 
                     this.fuelMeta = this.inventory[0].getItemDamage();
                 }

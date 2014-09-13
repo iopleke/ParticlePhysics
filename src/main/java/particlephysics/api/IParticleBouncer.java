@@ -1,7 +1,7 @@
 package particlephysics.api;
 
-import particlephysics.entity.particle.TemplateParticle;
 import net.minecraft.world.World;
+import particlephysics.entity.particle.TemplateParticle;
 
 public interface IParticleBouncer
 {

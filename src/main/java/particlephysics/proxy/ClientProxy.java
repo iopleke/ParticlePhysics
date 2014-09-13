@@ -1,11 +1,11 @@
-package particlephysics.network;
+package particlephysics.proxy;
 
-import net.minecraft.util.Icon;
-import particlephysics.entity.particle.TemplateParticle;
-import particlephysics.entity.particle.RenderParticle;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.util.IIcon;
+import particlephysics.entity.particle.RenderParticle;
+import particlephysics.entity.particle.TemplateParticle;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy
@@ -13,13 +13,13 @@ public class ClientProxy extends CommonProxy
 
     public static int RENDER_ID;
 
-    public static Icon clay;
-    public static Icon coal;
-    public static Icon concentrated;
-    public static Icon seed;
-    public static Icon split;
+    public static IIcon clay;
+    public static IIcon coal;
+    public static IIcon concentrated;
+    public static IIcon seed;
+    public static IIcon split;
 
-    public static Icon sand;
+    public static IIcon sand;
 
     @Override
     public void registerRenderers()

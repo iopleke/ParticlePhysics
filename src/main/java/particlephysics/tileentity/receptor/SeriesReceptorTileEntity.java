@@ -1,13 +1,10 @@
 package particlephysics.tileentity.receptor;
 
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
-import particlephysics.entity.particle.TemplateParticle;
 import particlephysics.api.IParticleReceptor;
-import cofh.api.energy.IEnergyHandler;
-import cofh.api.energy.TileEnergyHandler;
+import particlephysics.entity.particle.TemplateParticle;
 
-public class SeriesReceptorTileEntity extends TileEnergyHandler implements IParticleReceptor
+public class SeriesReceptorTileEntity extends TileEntity implements IParticleReceptor
 {
 
     public int excitedTicks = 0;
@@ -24,16 +21,6 @@ public class SeriesReceptorTileEntity extends TileEnergyHandler implements IPart
     @Override
     public void onContact(TemplateParticle particle)
     {
-
-        if (this.excitedTicks > 0)
-        {
-            this.storage.modifyEnergyStored(((int) (constant * particle.potential)));
-        }
-        else
-        {
-
-            this.storage.modifyEnergyStored(((int) (constant * particle.potential)));
-        }
         this.excitedTicks = 20;
         particle.setDead();
     }
@@ -42,28 +29,6 @@ public class SeriesReceptorTileEntity extends TileEnergyHandler implements IPart
     public void updateEntity()
     {
         super.updateEntity();
-        this.storage.setCapacity(320000000);
-        this.excitedTicks--;
-        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS)
-        {
-            TileEntity te = worldObj.getBlockTileEntity(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
-            if (te != null && te instanceof IEnergyHandler)
-            {
-                IEnergyHandler energy = (IEnergyHandler) te;
-                if (energy.canInterface(dir.getOpposite()))
-                {
-
-                    this.storage.modifyEnergyStored(-1 * energy.receiveEnergy(dir.getOpposite(), this.getEnergyStored(null), false));
-                }
-            }
-        }
-    }
-
-    @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
-    {
-
-        return 0;
     }
 
 }

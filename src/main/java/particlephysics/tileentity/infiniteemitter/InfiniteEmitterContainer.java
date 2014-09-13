@@ -1,13 +1,15 @@
 package particlephysics.tileentity.infiniteemitter;
 
-import particlephysics.tileentity.emitter.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import particlephysics.tileentity.emitter.EmitterContainer;
+import particlephysics.tileentity.emitter.EmitterFuelSlot;
+import particlephysics.tileentity.emitter.EmitterTileEntity;
 
 public class InfiniteEmitterContainer extends EmitterContainer
 {
@@ -65,7 +67,7 @@ public class InfiniteEmitterContainer extends EmitterContainer
                 {
                     return null;
                 }
-            } else if (machine.isValidFuel(stack.itemID) || !mergeItemStack(stack, 36, 36 + machine.getSizeInventory(), false))
+            } else if (machine.isValidFuel(stack) || !mergeItemStack(stack, 36, 36 + machine.getSizeInventory(), false))
             {
                 return null;
             }

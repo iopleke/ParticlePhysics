@@ -1,6 +1,6 @@
 package particlephysics.item;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,16 +11,16 @@ import particlephysics.entity.particle.TemplateParticle;
 public class PotentialReader extends Item
 {
 
-    public PotentialReader(int par1)
+    public PotentialReader()
     {
-        super(par1);
+        super();
         setMaxStackSize(1);
         setCreativeTab(ParticlePhysicsTab.instance);
         setUnlocalizedName("potentialReader");
     }
 
     @Override
-    public void registerIcons(IconRegister register)
+    public void registerIcons(IIconRegister register)
     {
         this.itemIcon = register.registerIcon("minechem:potentialReader");
     }
@@ -32,7 +32,7 @@ public class PotentialReader extends Item
         if (entity instanceof TemplateParticle)
         {
             TemplateParticle particle = (TemplateParticle) entity;
-            player.addChatMessage("Potential: " + particle.potential);
+            //player.addChatMessage("Potential: " + particle.potential);
             return true;
         }
         return false;

@@ -1,7 +1,8 @@
 package particlephysics.utility;
 
-import java.util.Arrays;
 import particlephysics.tileentity.emitter.EmitterGUI;
+
+import java.util.Arrays;
 
 public class GUIRectangle
 {

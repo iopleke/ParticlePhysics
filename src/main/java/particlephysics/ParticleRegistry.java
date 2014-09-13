@@ -1,25 +1,12 @@
 package particlephysics;
 
+import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
+import particlephysics.entity.particle.*;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
-
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.Icon;
-import particlephysics.entity.particle.TemplateParticle;
-import particlephysics.entity.particle.BlankParticle;
-import particlephysics.entity.particle.BlazepowderParticle;
-import particlephysics.entity.particle.CharcoalParticle;
-import particlephysics.entity.particle.ClayParticle;
-import particlephysics.entity.particle.CoalParticle;
-import particlephysics.entity.particle.ConcentratedParticle;
-import particlephysics.entity.particle.GlassParticle;
-import particlephysics.entity.particle.GunpowderParticle;
-import particlephysics.entity.particle.LeafParticle;
-import particlephysics.entity.particle.PaperParticle;
-import particlephysics.entity.particle.SandParticle;
-import particlephysics.entity.particle.SeedParticle;
-import particlephysics.entity.particle.SplitParticle;
-import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class ParticleRegistry
 {
@@ -43,20 +30,20 @@ public class ParticleRegistry
         particles.add(LeafParticle.class);
     }
 
-    public static Hashtable<Class, Icon> icons = new Hashtable<Class, Icon>();
+    public static Hashtable<Class, IIcon> icons = new Hashtable<Class, IIcon>();
 
-    public static void populateIcons(IconRegister register)
+    public static void populateIcons(IIconRegister register)
     {
 
         for (int i = 0; i < particles.size(); i++)
         {
-            Icon particleIcon = register.registerIcon(ModParticlePhysics.ID + ":" + particles.get(i).getName().substring("particlephysics.entity.particle.".length()));
+            IIcon particleIcon = register.registerIcon(ModParticlePhysics.ID + ":" + particles.get(i).getName().substring("particlephysics.entity.particle.".length()));
             icons.put(particles.get(i), particleIcon);
         }
 
     }
 
-    public static Icon getIconFromInstance(TemplateParticle particle)
+    public static IIcon getIconFromInstance(TemplateParticle particle)
     {
         for (int i = 0; i < particles.size(); i++)
         {

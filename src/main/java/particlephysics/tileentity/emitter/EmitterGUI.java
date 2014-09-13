@@ -1,15 +1,16 @@
 package particlephysics.tileentity.emitter;
 
-import particlephysics.utility.GUIRectangle;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import particlephysics.network.PacketHandler;
 import particlephysics.entity.particle.TemplateParticle;
+import particlephysics.network.MessageHandler;
+import particlephysics.network.message.MessageEmitterUpdate;
+import particlephysics.utility.GUIRectangle;
+
+import java.util.List;
 
 // Thanks to VSWE for assorted bits of the code
 public class EmitterGUI extends GuiContainer
@@ -119,9 +120,9 @@ public class EmitterGUI extends GuiContainer
 
         if (tile.fuelStored <= 1)
         {
-            if (oldTick != tile.worldObj.getWorldTime())
+            if (oldTick != tile.getWorldObj().getWorldTime())
             {
-                oldTick = tile.worldObj.getWorldTime();
+                oldTick = tile.getWorldObj().getWorldTime();
                 tickCounter++;
                 if (tickCounter >= 10 + (20 * tile.interval) * 2)
                 {
@@ -155,17 +156,17 @@ public class EmitterGUI extends GuiContainer
         this.updateSliderPosition();
         slider.draw(this, 0, 224);
 
-        fontRenderer.drawString((this.tempHeightSetting + 1) + " Seconds", guiLeft + 48, guiTop + 4, 0x404040);
-        fontRenderer.drawString("Queue", guiLeft + 85, guiTop + 101, 0x404040);
+        fontRendererObj.drawString((this.tempHeightSetting + 1) + " Seconds", guiLeft + 48, guiTop + 4, 0x404040);
+        fontRendererObj.drawString("Queue", guiLeft + 85, guiTop + 101, 0x404040);
 
         if (tile.getStackInSlot(0) != null)
         {
-            TemplateParticle particle = tile.getParticleFromFuel(tile.getStackInSlot(0).itemID, tile.getStackInSlot(0).getItemDamage());
+            TemplateParticle particle = tile.getParticleFromFuel(tile.getStackInSlot(0).getItemDamage(), tile.getStackInSlot(0).getItemDamage());
             if (particle != null)
             {
                 // Display particle type
-                fontRenderer.drawString(particle.getName(), guiLeft + 115, guiTop + 46, 0x404040);
-                fontRenderer.drawString("Type:", guiLeft + 89, guiTop + 46, 0x404040);
+                fontRendererObj.drawString(particle.getName(), guiLeft + 115, guiTop + 46, 0x404040);
+                fontRendererObj.drawString("Type:", guiLeft + 89, guiTop + 46, 0x404040);
             }
         }
 
@@ -183,15 +184,15 @@ public class EmitterGUI extends GuiContainer
 
     public void drawHoverString(List l, int w, int h)
     {
-        this.drawHoveringText(l, w, h, fontRenderer);
+        this.drawHoveringText(l, w, h, fontRendererObj);
     }
 
     @Override
     protected void actionPerformed(GuiButton button)
     {
         super.actionPerformed(button);
-        PacketHandler.sendInterfacePacket((byte) 0, (byte) button.id);
-
+        MessageEmitterUpdate message = new MessageEmitterUpdate(0, button.id);
+        MessageHandler.INSATNCE.sendToServer(message);
     }
 
     @Override
@@ -239,7 +240,8 @@ public class EmitterGUI extends GuiContainer
         super.mouseMovedOrUp(x, y, button);
         if (isDragging)
         {
-            PacketHandler.sendInterfacePacket((byte) 1, (byte) tempHeightSetting);
+            MessageEmitterUpdate message = new MessageEmitterUpdate(1, tempHeightSetting);
+            MessageHandler.INSATNCE.sendToServer(message);
 
             tile.interval = tempHeightSetting;
             this.isDragging = false;

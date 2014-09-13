@@ -1,32 +1,32 @@
 package particlephysics.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import particlephysics.Settings;
-import particlephysics.entity.particle.TemplateParticle;
 import particlephysics.api.IParticleBouncer;
+import particlephysics.entity.particle.TemplateParticle;
 import particlephysics.utility.BasicComplexBlock;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlGlassBlock extends BasicComplexBlock implements IParticleBouncer
 {
 
     public ControlGlassBlock()
     {
-        super(Settings.ControlGlass);
+        super();
     }
 
-    public ControlGlassBlock(int i)
+    public ControlGlassBlock(Material material)
     {
-        super(i);
+        super(material);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ControlGlassBlock extends BasicComplexBlock implements IParticleBou
     }
 
     @Override
-    public boolean isBlockNormalCube(World world, int x, int y, int z)
+    public boolean isBlockNormalCube()
     {
         return false;
     }
@@ -85,7 +85,7 @@ public class ControlGlassBlock extends BasicComplexBlock implements IParticleBou
     @Override
     public void addRecipe()
     {
-        GameRegistry.addRecipe(new ItemStack(this), "R R", " G ", "R R", 'R', new ItemStack(Item.redstone), 'G', new ItemStack(Block.glass));
+        GameRegistry.addRecipe(new ItemStack(this), "R R", " G ", "R R", 'R', new ItemStack(Items.redstone), 'G', new ItemStack(Blocks.glass));
 
     }
 

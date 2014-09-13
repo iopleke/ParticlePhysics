@@ -1,31 +1,31 @@
 package particlephysics.tileentity.emitter;
 
-import java.util.ArrayList;
-
-import net.minecraft.client.renderer.texture.IconRegister;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import particlephysics.ModParticlePhysics;
 import particlephysics.ParticleRegistry;
-import particlephysics.Settings;
 import particlephysics.utility.BasicComplexBlock;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import java.util.ArrayList;
 
 public class EmitterBlock extends BasicComplexBlock
 {
 
     public EmitterBlock()
     {
-        super(Settings.Emitter);
+        super();
     }
 
-    public EmitterBlock(int i)
+    public EmitterBlock(Material material)
     {
-        super(i);
+        super(material);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class EmitterBlock extends BasicComplexBlock
     @Override
     public void addRecipe()
     {
-        GameRegistry.addRecipe(new ItemStack(this), "I  ", "IID", "I  ", 'I', new ItemStack(Item.ingotIron), 'D', new ItemStack(Item.diamond));
+        GameRegistry.addRecipe(new ItemStack(this), "I  ", "IID", "I  ", 'I', new ItemStack(Items.iron_ingot), 'D', new ItemStack(Items.diamond));
 
     }
 
@@ -87,9 +87,9 @@ public class EmitterBlock extends BasicComplexBlock
     }
 
     @Override
-    public void registerIcons(IconRegister icon)
+    public void registerBlockIcons(IIconRegister icon)
     {
-        super.registerIcons(icon);
+        super.registerBlockIcons(icon);
         // This is so hacky it makes me ashamed
         ParticleRegistry.populateIcons(icon);
     }
@@ -97,7 +97,7 @@ public class EmitterBlock extends BasicComplexBlock
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ)
     {
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof EmitterTileEntity)
         {
             entityPlayer.openGui(ModParticlePhysics.INSTANCE, 0, world, x, y, z);

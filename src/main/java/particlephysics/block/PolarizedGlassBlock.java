@@ -1,26 +1,26 @@
 package particlephysics.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import particlephysics.Settings;
 import particlephysics.entity.particle.TemplateParticle;
 import particlephysics.utility.BasicComplexBlock;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PolarizedGlassBlock extends BasicComplexBlock
 {
 
     public PolarizedGlassBlock()
     {
-        super(Settings.PolarizedGlass);
+        super();
     }
 
     @Override
@@ -38,9 +38,9 @@ public class PolarizedGlassBlock extends BasicComplexBlock
         }
     }
 
-    public PolarizedGlassBlock(int i)
+    public PolarizedGlassBlock(Material material)
     {
-        super(i);
+        super(material);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class PolarizedGlassBlock extends BasicComplexBlock
     @Override
     public void addRecipe()
     {
-        GameRegistry.addRecipe(new ItemStack(this), " R ", "RGR", " R ", 'R', new ItemStack(Item.redstone), 'G', new ItemStack(Block.glass));
+        GameRegistry.addRecipe(new ItemStack(this), " R ", "RGR", " R ", 'R', new ItemStack(Items.redstone), 'G', new ItemStack(Blocks.glass));
 
     }
 
