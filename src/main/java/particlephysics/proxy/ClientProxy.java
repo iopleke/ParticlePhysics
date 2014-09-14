@@ -3,7 +3,9 @@ package particlephysics.proxy;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 import particlephysics.entity.particle.RenderParticle;
 import particlephysics.entity.particle.TemplateParticle;
 
@@ -25,5 +27,11 @@ public class ClientProxy extends CommonProxy
     public void registerRenderers()
     {
         RenderingRegistry.registerEntityRenderingHandler(TemplateParticle.class, new RenderParticle());
+    }
+
+    @Override
+    public World getWorld()
+    {
+        return Minecraft.getMinecraft().theWorld;
     }
 }

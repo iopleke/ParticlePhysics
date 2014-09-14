@@ -1,5 +1,7 @@
 package particlephysics.proxy;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraft.world.World;
 import particlephysics.network.MessageHandler;
 
 public class CommonProxy
@@ -17,5 +19,10 @@ public class CommonProxy
     public void registerHandlers()
     {
         MessageHandler.init();
+    }
+
+    public World getWorld()
+    {
+        return FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld();
     }
 }
