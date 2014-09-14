@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.inventory.Container;
 import particlephysics.tileentity.emitter.EmitterContainer;
 
-public class MessageEmitterUpdate implements IMessage
+public class MessageEmitterUpdate implements IMessage, IMessageHandler<MessageEmitterUpdate, IMessage>
 {
     private int type;
     private int value;
@@ -37,18 +37,15 @@ public class MessageEmitterUpdate implements IMessage
         buf.writeInt(this.value);
     }
 
-    public class Handler implements IMessageHandler<MessageEmitterUpdate, IMessage>
+    @Override
+    public IMessage onMessage(MessageEmitterUpdate message, MessageContext ctx)
     {
-
-        @Override
-        public IMessage onMessage(MessageEmitterUpdate message, MessageContext ctx)
+        //Container container = FMLClientHandler.instance().getClient().thePlayer.openContainer;
+        Container container = ctx.getServerHandler().playerEntity.openContainer;
+        if (container instanceof EmitterContainer)
         {
-            Container container = ctx.getServerHandler().playerEntity.openContainer;
-            if (container instanceof EmitterContainer)
-            {
-                ((EmitterContainer) container).getMachine().receiveButton(message.type, message.value);
-            }
-            return null;
+            ((EmitterContainer) container).getMachine().receiveButton(message.type, message.value);
         }
+        return null;
     }
 }

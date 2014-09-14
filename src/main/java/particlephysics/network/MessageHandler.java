@@ -16,8 +16,8 @@ public class MessageHandler implements IMessageHandler
 
     public static void init()
     {
-        INSATNCE.registerMessage(MessageParticleUpdate.Handler.class, MessageParticleUpdate.class, 0, Side.CLIENT);
-        INSATNCE.registerMessage(MessageEmitterUpdate.Handler.class, MessageEmitterUpdate.class, 1, Side.SERVER);
+        INSATNCE.registerMessage(MessageParticleUpdate.class, MessageParticleUpdate.class, 0, Side.CLIENT);
+        INSATNCE.registerMessage(MessageEmitterUpdate.class, MessageEmitterUpdate.class, 1, Side.SERVER);
     }
 
     @Override

@@ -46,7 +46,6 @@ public abstract class TemplateParticle extends EntityLivingBase
         super(par1World);
         this.setSize(0.25F, 0.25F);
         this.potential = getStartingPotential();
-
     }
 
     public abstract float getStartingPotential();
