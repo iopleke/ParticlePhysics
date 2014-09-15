@@ -133,7 +133,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         this.fuelType = nbt.getInteger("FuelType");
         this.interval = nbt.getInteger("Interval");
         this.fuelMeta = nbt.getInteger("FuelMeta");
-        NBTTagList tagList = nbt.getTagList("Inventory", 0);
+        NBTTagList tagList = nbt.getTagList("Inventory", 10);
         for (int i = 0; i < tagList.tagCount(); i++)
         {
             NBTTagCompound compound = tagList.getCompoundTagAt(i);
@@ -150,7 +150,6 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         nbt.setInteger("Fuel", this.fuelStored);
         nbt.setInteger("FuelType", this.fuelType);
         nbt.setInteger("FuelMeta", this.fuelMeta);
-        NBTTagCompound inv = new NBTTagCompound();
         NBTTagList tagList = new NBTTagList();
         for (int i = 0; i < inventory.length; i++)
         {
@@ -158,8 +157,8 @@ public class EmitterTileEntity extends TileEntity implements IInventory
             if (item != null)
             {
                 NBTTagCompound compound = new NBTTagCompound();
-                item.writeToNBT(compound);
                 compound.setInteger("Slot", i);
+                item.writeToNBT(compound);
                 tagList.appendTag(compound);
             }
         }
