@@ -25,6 +25,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     @Override
     public void updateEntity()
     {
+        pushQueue();
         intervalReset = (int)(worldObj.getTotalWorldTime() % ((20 * interval) + 20));
         if (!worldObj.isRemote && intervalReset == 0)
         {
@@ -83,6 +84,36 @@ public class EmitterTileEntity extends TileEntity implements IInventory
                     particle.setPosition(xCoord + dir.offsetX + 0.375, yCoord + dir.offsetY + 0.375, zCoord + dir.offsetZ + 0.375);
                     worldObj.spawnEntityInWorld(particle);
 
+                }
+            }
+        }
+    }
+
+    protected void pushQueue()
+    {
+        for(int i = this.inventory.length -1; i >= 0; i--)
+        {
+            if (i == 0 || this.inventory[i] == null)
+            {
+                continue;
+            }
+            else if (this.inventory[i-1] == null)
+            {
+                setInventorySlotContents(i-1, this.inventory[i]);
+                setInventorySlotContents(i, null);
+            }
+            else if (this.inventory[i-1].isItemEqual(this.inventory[i]))
+            {
+                int spaceLeft = this.inventory[i-1].getMaxStackSize() - this.inventory[i-1].stackSize;
+                if (spaceLeft >= this.inventory[i].stackSize)
+                {
+                    this.inventory[i-1].stackSize += this.inventory[i].stackSize;
+                    this.inventory[i] = null;
+                }
+                else
+                {
+                    this.inventory[i-1].stackSize += spaceLeft;
+                    this.inventory[i].stackSize -= spaceLeft;
                 }
             }
         }

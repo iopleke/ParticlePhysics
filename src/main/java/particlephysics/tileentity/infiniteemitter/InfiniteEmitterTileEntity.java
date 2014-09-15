@@ -9,6 +9,7 @@ public class InfiniteEmitterTileEntity extends EmitterTileEntity
     @Override
     public void updateEntity()
     {
+        pushQueue();
         this.intervalReset = (int) (worldObj.getTotalWorldTime() % ((20 * interval) + 20));
         if (!worldObj.isRemote && intervalReset == 0)
         {
