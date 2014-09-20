@@ -1,6 +1,5 @@
 package particlephysics.entity.particle;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,8 +15,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import particlephysics.ParticleRegistry;
 import particlephysics.api.IParticleBouncer;
 import particlephysics.api.IParticleReceptor;
-import particlephysics.network.MessageHandler;
-import particlephysics.network.message.MessageParticleUpdate;
 import particlephysics.utility.BlockRenderInfo;
 
 import java.util.ArrayList;
@@ -114,15 +111,6 @@ public abstract class TemplateParticle extends EntityLivingBase
 
     }
 
-    public void sendCompletePositionUpdate()
-    {
-        if (!worldObj.isRemote)
-        {
-            MessageParticleUpdate message = new MessageParticleUpdate(this, this.effect);
-            MessageHandler.INSATNCE.sendToAllAround(message, new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, posX, posY, posZ, 30));
-        }
-    }
-
     @Override
     public void onEntityUpdate()
     {
@@ -145,7 +133,6 @@ public abstract class TemplateParticle extends EntityLivingBase
 
         }
         super.onEntityUpdate();
-        this.sendCompletePositionUpdate();
         if (ticks > 600 || this.posY > 257)
         {
             this.setDead();
