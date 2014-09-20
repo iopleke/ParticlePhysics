@@ -8,7 +8,6 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import particlephysics.ModParticlePhysics;
 import particlephysics.network.message.MessageEmitterUpdate;
-import particlephysics.network.message.MessageParticleUpdate;
 
 public class MessageHandler implements IMessageHandler
 {
@@ -16,8 +15,7 @@ public class MessageHandler implements IMessageHandler
 
     public static void init()
     {
-        INSATNCE.registerMessage(MessageParticleUpdate.class, MessageParticleUpdate.class, 0, Side.CLIENT);
-        INSATNCE.registerMessage(MessageEmitterUpdate.class, MessageEmitterUpdate.class, 1, Side.SERVER);
+        INSATNCE.registerMessage(MessageEmitterUpdate.class, MessageEmitterUpdate.class, 0, Side.SERVER);
     }
 
     @Override
