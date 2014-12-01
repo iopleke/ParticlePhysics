@@ -224,6 +224,7 @@ public abstract class TemplateParticle extends EntityLivingBase
     @Override
     public void writeToNBT(NBTTagCompound nbt)
     {
+        super.writeToNBT(nbt);
         if (movementDirection != null)
         {
             nbt.setInteger("direction", movementDirection.ordinal());
@@ -233,6 +234,7 @@ public abstract class TemplateParticle extends EntityLivingBase
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
+        super.readFromNBT(nbt);
         this.movementDirection = ForgeDirection.VALID_DIRECTIONS[nbt.getInteger("direction")];
     }
 
