@@ -161,7 +161,7 @@ public class EmitterGUI extends GuiContainer
 
         if (tile.getStackInSlot(0) != null)
         {
-            TemplateParticle particle = tile.getParticleFromFuel(tile.getStackInSlot(0).getItemDamage(), tile.getStackInSlot(0).getItemDamage());
+            TemplateParticle particle = tile.getParticleFromFuel(tile.getStackInSlot(0));
             if (particle != null)
             {
                 // Display particle type

@@ -20,9 +20,7 @@ public class InfiniteEmitterTileEntity extends EmitterTileEntity
                     // TODO: Get fuel amount from ItemMolecule.getSize() * 100;
                     this.fuelStored = 100;
 
-                    this.fuelType = 0;
-
-                    this.fuelMeta = this.inventory[0].getItemDamage();
+                    this.fuelType = this.inventory[0].copy();
                 }
 
             }
@@ -35,7 +33,7 @@ public class InfiniteEmitterTileEntity extends EmitterTileEntity
                 for (ForgeDirection dir : outputDirections)
                 {
 
-                    TemplateParticle particle = getParticleFromFuel(fuelType, fuelMeta);
+                    TemplateParticle particle = getParticleFromFuel(fuelType);
                     if (particle == null)
                     {
                         return;

@@ -1,14 +1,16 @@
 package particlephysics.tileentity.emitter;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import particlephysics.entity.particle.CoalParticle;
-import particlephysics.entity.particle.TemplateParticle;
+import particlephysics.entity.particle.*;
 import particlephysics.tileentity.infiniteemitter.InfiniteEmitterBlock;
 
 public class EmitterTileEntity extends TileEntity implements IInventory
@@ -16,9 +18,8 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     public int interval = 40;
     public ItemStack[] inventory = new ItemStack[7];
 
-    public int fuelType;
+    public ItemStack fuelType;
 
-    public int fuelMeta;
     public int fuelStored = 0;
     public int intervalReset = 0;
 
@@ -37,28 +38,8 @@ public class EmitterTileEntity extends TileEntity implements IInventory
                     {
                         // TODO: Get fuel amount from ItemMolecule.getSize() * 100;
                         this.fuelStored = 100;
-
-                        this.fuelType = 0;
-
-                        // to my future self
-                        // when you refactor this code
-                        // forgive my errors
-                        this.fuelMeta = this.inventory[0].getItemDamage();
-
+                        this.fuelType = this.inventory[0].copy();
                         this.decrStackSize(0, 1);
-                        if (this.inventory[0] == null)
-                        {
-                            for (int i = 1; i < getSizeInventory(); i++)
-                            {
-                                ItemStack item = getStackInSlot(i);
-                                if (item != null && this.isValidFuel(item))
-                                {
-                                    this.setInventorySlotContents(0, item);
-                                    this.setInventorySlotContents(i, null);
-                                    break;
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -66,7 +47,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
             {
                 if (!(worldObj.getBlock(xCoord, yCoord, zCoord) instanceof InfiniteEmitterBlock && getStackInSlot(0) != null && getStackInSlot(0).stackSize >= 63))
                 {
-                    this.fuelStored--;
+                    this.fuelStored -= 4;
                 }
                 ForgeDirection[] outputDirections =
                 {
@@ -75,7 +56,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
                 for (ForgeDirection dir : outputDirections)
                 {
 
-                    TemplateParticle particle = getParticleFromFuel(fuelType, fuelMeta);
+                    TemplateParticle particle = getParticleFromFuel(fuelType);
                     if (particle == null)
                     {
                         return;
@@ -119,20 +100,37 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         }
     }
 
-    public TemplateParticle getParticleFromFuel(int fuel, int meta)
+    public TemplateParticle getParticleFromFuel(ItemStack fuel)
     {
-        return new CoalParticle(this.worldObj);
+        if (fuel.getItem() == Items.coal)
+            return new CoalParticle(this.worldObj);
+        if (fuel.getItem() == Items.blaze_powder)
+            return new BlazepowderParticle(this.worldObj);
+        if (fuel.getItem() == Items.clay_ball)
+            return new ClayParticle(this.worldObj);
+        if (fuel.getItem() == Items.gunpowder)
+            return new GunpowderParticle(this.worldObj);
+        if (fuel.getItem() == Items.wheat_seeds)
+            return new SeedParticle(this.worldObj);
+        if (fuel.getItem() == Items.paper)
+            return new PaperParticle(this.worldObj);
+        if (fuel.getItem() == Item.getItemFromBlock(Blocks.sand))
+            return new SandParticle(this.worldObj);
+        if (fuel.getItem() == Item.getItemFromBlock(Blocks.leaves))
+            return new LeafParticle(this.worldObj);
+        if (fuel.getItem() == Item.getItemFromBlock(Blocks.glass))
+            return new GlassParticle(this.worldObj);
+        return new BlankParticle(this.worldObj);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
-        this.fuelStored = nbt.getInteger("Fuel");
-
-        this.fuelType = nbt.getInteger("FuelType");
         this.interval = nbt.getInteger("Interval");
-        this.fuelMeta = nbt.getInteger("FuelMeta");
+        this.fuelStored = nbt.getInteger("Fuel");
+        if(nbt.hasKey("FuelType"))
+            this.fuelType = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("FuelType"));
         NBTTagList tagList = nbt.getTagList("Inventory", 10);
         for (int i = 0; i < tagList.tagCount(); i++)
         {
@@ -148,8 +146,8 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         super.writeToNBT(nbt);
         nbt.setInteger("Interval", this.interval);
         nbt.setInteger("Fuel", this.fuelStored);
-        nbt.setInteger("FuelType", this.fuelType);
-        nbt.setInteger("FuelMeta", this.fuelMeta);
+        if (this.fuelType != null)
+            nbt.setTag("FuelType", this.fuelType.writeToNBT(new NBTTagCompound()));
         NBTTagList tagList = new NBTTagList();
         for (int i = 0; i < inventory.length; i++)
         {
@@ -251,9 +249,27 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         return isValidFuel(itemstack);
     }
 
-    public boolean isValidFuel(ItemStack itemstack)
+    public boolean isValidFuel(ItemStack fuel)
     {
-        return true;
+        if (fuel.getItem() == Items.coal)
+            return true;
+        if (fuel.getItem() == Items.blaze_powder)
+            return true;
+        if (fuel.getItem() == Items.clay_ball)
+            return true;
+        if (fuel.getItem() == Items.gunpowder)
+            return true;
+        if (fuel.getItem() == Items.wheat_seeds)
+            return true;
+        if (fuel.getItem() == Items.paper)
+            return true;
+        if (fuel.getItem() == Item.getItemFromBlock(Blocks.sand))
+            return true;
+        if (fuel.getItem() == Item.getItemFromBlock(Blocks.leaves))
+            return true;
+        if (fuel.getItem() == Item.getItemFromBlock(Blocks.glass))
+            return true;
+        return false;
     }
 
     public void receiveButton(int type, int value)
@@ -271,4 +287,13 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         }
     }
 
+    public void setFuelData(int id, int value)
+    {
+        int damage = this.fuelType == null ? 0 : this.fuelType.getItemDamage();
+        int stackSize = this.fuelType == null ? 0 : this.fuelType.stackSize;
+        if (id == 1)
+            this.fuelType = value == 0 ? null : new ItemStack(Item.getItemById(value), stackSize, damage);
+        else if (id == 2)
+            this.fuelType = new ItemStack(this.fuelType.getItem(), stackSize, value);
+    }
 }
