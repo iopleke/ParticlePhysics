@@ -7,6 +7,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class EmitterContainer extends Container
@@ -95,8 +96,8 @@ public class EmitterContainer extends Container
         super.addCraftingToCrafters(player);
 
         player.sendProgressBarUpdate(this, 0, machine.fuelStored);
-        player.sendProgressBarUpdate(this, 1, machine.fuelType);
-        player.sendProgressBarUpdate(this, 2, machine.fuelMeta);
+        player.sendProgressBarUpdate(this, 1, machine.fuelType != null ? Item.getIdFromItem(machine.fuelType.getItem()) : 0);
+        player.sendProgressBarUpdate(this, 2, machine.fuelType != null ? machine.fuelType.getItemDamage() : 0);
         player.sendProgressBarUpdate(this, 3, machine.interval);
     }
 
@@ -110,11 +111,11 @@ public class EmitterContainer extends Container
         }
         if (id == 1)
         {
-            machine.fuelType = data;
+            machine.setFuelData(1, data);
         }
         if (id == 2)
         {
-            machine.fuelMeta = data;
+            machine.setFuelData(2, data);
         }
         if (id == 3)
         {
@@ -123,7 +124,7 @@ public class EmitterContainer extends Container
     }
 
     private int oldFuelStored;
-    private int oldFuelType;
+    private Item oldFuelType;
     private int oldFuelMeta;
 
     @Override
@@ -137,19 +138,30 @@ public class EmitterContainer extends Container
             {
                 ((ICrafting) player).sendProgressBarUpdate(this, 0, machine.fuelStored);
             }
-            if (oldFuelType != machine.fuelType)
+            if (machine.fuelType != null)
             {
-                ((ICrafting) player).sendProgressBarUpdate(this, 1, machine.fuelType);
-            }
-            if (oldFuelMeta != machine.fuelMeta)
-            {
-                ((ICrafting) player).sendProgressBarUpdate(this, 2, machine.fuelMeta);
+                if (oldFuelType != machine.fuelType.getItem())
+                {
+                    ((ICrafting) player).sendProgressBarUpdate(this, 1, Item.getIdFromItem(machine.fuelType.getItem()));
+                }
+                if (oldFuelMeta != machine.fuelType.getItemDamage())
+                {
+                    ((ICrafting) player).sendProgressBarUpdate(this, 2, machine.fuelType.getItemDamage());
+                }
             }
 
         }
-        this.oldFuelMeta = machine.fuelMeta;
         this.oldFuelStored = machine.fuelStored;
-        this.oldFuelType = machine.fuelType;
+        if (machine.fuelType != null)
+        {
+            this.oldFuelType = machine.fuelType.getItem();
+            this.oldFuelMeta = machine.fuelType.getItemDamage();
+        }
+        else
+        {
+            this.oldFuelType = null;
+            this.oldFuelMeta = -1;
+        }
     }
 
 }
