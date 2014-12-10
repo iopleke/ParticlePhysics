@@ -1,0 +1,10 @@
+itemGroup.tabParticlePhysics=Particle Physics
+language.name=Francais
+language.region=FR
+language.code=fr_FR
+
+tile.Emitter.name=Emetteur
+tile.PolarizedGlass.name=Verre polarisé
+tile.SeriesReceptor.name=Récepteur série
+tile.ControlGlass.name=Verre de contrôle
+tile.InfiniteEmitter.name=Emetteur infini
