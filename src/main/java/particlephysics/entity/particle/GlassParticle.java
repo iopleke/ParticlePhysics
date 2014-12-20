@@ -44,8 +44,7 @@ public class GlassParticle extends TemplateParticle
                 this.potential = Math.max(this.potential + 300, 20000);
                 particle.setDead();
             }
-        }
-        else
+        } else
         {
             float deficit = particle.getStartingPotential() - particle.potential;
             if (deficit > 0)

@@ -10,7 +10,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import particlephysics.entity.particle.*;
+import particlephysics.entity.particle.BlankParticle;
+import particlephysics.entity.particle.BlazepowderParticle;
+import particlephysics.entity.particle.ClayParticle;
+import particlephysics.entity.particle.CoalParticle;
+import particlephysics.entity.particle.GlassParticle;
+import particlephysics.entity.particle.GunpowderParticle;
+import particlephysics.entity.particle.LeafParticle;
+import particlephysics.entity.particle.PaperParticle;
+import particlephysics.entity.particle.SandParticle;
+import particlephysics.entity.particle.SeedParticle;
+import particlephysics.entity.particle.TemplateParticle;
 import particlephysics.tileentity.infiniteemitter.InfiniteEmitterBlock;
 
 public class EmitterTileEntity extends TileEntity implements IInventory
@@ -27,7 +37,7 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     public void updateEntity()
     {
         pushQueue();
-        intervalReset = (int)(worldObj.getTotalWorldTime() % ((20 * interval) + 20));
+        intervalReset = (int) (worldObj.getTotalWorldTime() % ((20 * interval) + 20));
         if (!worldObj.isRemote && intervalReset == 0)
         {
             if (fuelStored < 1)
@@ -72,28 +82,25 @@ public class EmitterTileEntity extends TileEntity implements IInventory
 
     protected void pushQueue()
     {
-        for(int i = this.inventory.length -1; i >= 0; i--)
+        for (int i = this.inventory.length - 1; i >= 0; i--)
         {
             if (i == 0 || this.inventory[i] == null)
             {
                 continue;
-            }
-            else if (this.inventory[i-1] == null)
+            } else if (this.inventory[i - 1] == null)
             {
-                setInventorySlotContents(i-1, this.inventory[i]);
+                setInventorySlotContents(i - 1, this.inventory[i]);
                 setInventorySlotContents(i, null);
-            }
-            else if (this.inventory[i-1].isItemEqual(this.inventory[i]))
+            } else if (this.inventory[i - 1].isItemEqual(this.inventory[i]))
             {
-                int spaceLeft = this.inventory[i-1].getMaxStackSize() - this.inventory[i-1].stackSize;
+                int spaceLeft = this.inventory[i - 1].getMaxStackSize() - this.inventory[i - 1].stackSize;
                 if (spaceLeft >= this.inventory[i].stackSize)
                 {
-                    this.inventory[i-1].stackSize += this.inventory[i].stackSize;
+                    this.inventory[i - 1].stackSize += this.inventory[i].stackSize;
                     this.inventory[i] = null;
-                }
-                else
+                } else
                 {
-                    this.inventory[i-1].stackSize += spaceLeft;
+                    this.inventory[i - 1].stackSize += spaceLeft;
                     this.inventory[i].stackSize -= spaceLeft;
                 }
             }
@@ -103,23 +110,41 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     public TemplateParticle getParticleFromFuel(ItemStack fuel)
     {
         if (fuel.getItem() == Items.coal)
+        {
             return new CoalParticle(this.worldObj);
+        }
         if (fuel.getItem() == Items.blaze_powder)
+        {
             return new BlazepowderParticle(this.worldObj);
+        }
         if (fuel.getItem() == Items.clay_ball)
+        {
             return new ClayParticle(this.worldObj);
+        }
         if (fuel.getItem() == Items.gunpowder)
+        {
             return new GunpowderParticle(this.worldObj);
+        }
         if (fuel.getItem() == Items.wheat_seeds)
+        {
             return new SeedParticle(this.worldObj);
+        }
         if (fuel.getItem() == Items.paper)
+        {
             return new PaperParticle(this.worldObj);
+        }
         if (fuel.getItem() == Item.getItemFromBlock(Blocks.sand))
+        {
             return new SandParticle(this.worldObj);
+        }
         if (fuel.getItem() == Item.getItemFromBlock(Blocks.leaves))
+        {
             return new LeafParticle(this.worldObj);
+        }
         if (fuel.getItem() == Item.getItemFromBlock(Blocks.glass))
+        {
             return new GlassParticle(this.worldObj);
+        }
         return new BlankParticle(this.worldObj);
     }
 
@@ -129,8 +154,10 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         super.readFromNBT(nbt);
         this.interval = nbt.getInteger("Interval");
         this.fuelStored = nbt.getInteger("Fuel");
-        if(nbt.hasKey("FuelType"))
+        if (nbt.hasKey("FuelType"))
+        {
             this.fuelType = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("FuelType"));
+        }
         NBTTagList tagList = nbt.getTagList("Inventory", 10);
         for (int i = 0; i < tagList.tagCount(); i++)
         {
@@ -147,7 +174,9 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         nbt.setInteger("Interval", this.interval);
         nbt.setInteger("Fuel", this.fuelStored);
         if (this.fuelType != null)
+        {
             nbt.setTag("FuelType", this.fuelType.writeToNBT(new NBTTagCompound()));
+        }
         NBTTagList tagList = new NBTTagList();
         for (int i = 0; i < inventory.length; i++)
         {
@@ -252,23 +281,41 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     public boolean isValidFuel(ItemStack fuel)
     {
         if (fuel.getItem() == Items.coal)
+        {
             return true;
+        }
         if (fuel.getItem() == Items.blaze_powder)
+        {
             return true;
+        }
         if (fuel.getItem() == Items.clay_ball)
+        {
             return true;
+        }
         if (fuel.getItem() == Items.gunpowder)
+        {
             return true;
+        }
         if (fuel.getItem() == Items.wheat_seeds)
+        {
             return true;
+        }
         if (fuel.getItem() == Items.paper)
+        {
             return true;
+        }
         if (fuel.getItem() == Item.getItemFromBlock(Blocks.sand))
+        {
             return true;
+        }
         if (fuel.getItem() == Item.getItemFromBlock(Blocks.leaves))
+        {
             return true;
+        }
         if (fuel.getItem() == Item.getItemFromBlock(Blocks.glass))
+        {
             return true;
+        }
         return false;
     }
 
@@ -292,8 +339,11 @@ public class EmitterTileEntity extends TileEntity implements IInventory
         int damage = this.fuelType == null ? 0 : this.fuelType.getItemDamage();
         int stackSize = this.fuelType == null ? 0 : this.fuelType.stackSize;
         if (id == 1)
+        {
             this.fuelType = value == 0 ? null : new ItemStack(Item.getItemById(value), stackSize, damage);
-        else if (id == 2)
+        } else if (id == 2)
+        {
             this.fuelType = new ItemStack(this.fuelType.getItem(), stackSize, value);
+        }
     }
 }

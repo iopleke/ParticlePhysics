@@ -1,12 +1,24 @@
 package particlephysics;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
-import particlephysics.entity.particle.*;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
+import particlephysics.entity.particle.BlankParticle;
+import particlephysics.entity.particle.BlazepowderParticle;
+import particlephysics.entity.particle.CharcoalParticle;
+import particlephysics.entity.particle.ClayParticle;
+import particlephysics.entity.particle.CoalParticle;
+import particlephysics.entity.particle.ConcentratedParticle;
+import particlephysics.entity.particle.GlassParticle;
+import particlephysics.entity.particle.GunpowderParticle;
+import particlephysics.entity.particle.LeafParticle;
+import particlephysics.entity.particle.PaperParticle;
+import particlephysics.entity.particle.SandParticle;
+import particlephysics.entity.particle.SeedParticle;
+import particlephysics.entity.particle.SplitParticle;
+import particlephysics.entity.particle.TemplateParticle;
 
 public class ParticleRegistry
 {
@@ -64,8 +76,7 @@ public class ParticleRegistry
             {
                 EntityRegistry.registerModEntity(particles.get(i), particles.get(i).getName(), i, ModParticlePhysics.INSTANCE, 80, 1, true);
 
-            }
-            catch (SecurityException e)
+            } catch (SecurityException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

@@ -37,7 +37,6 @@ public class ModelParticle extends ModelBase
 
         // Move the object into the correct position on the block (because the OBJ's origin is the center of the object)
         // GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.5f);
-
         // Scale our object to about half-size in all directions (the OBJ file is a little large)
         GL11.glScalef(0.5f, 0.5f, 0.5f);
 

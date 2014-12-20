@@ -2,6 +2,8 @@ package particlephysics.utility;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,9 +18,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import particlephysics.ModParticlePhysics;
 import particlephysics.proxy.ClientProxy;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class BasicComplexBlock extends Block implements IBlock
 {
@@ -91,7 +90,9 @@ public abstract class BasicComplexBlock extends Block implements IBlock
                 {
                     int randomN = random.nextInt(21) + 10;
                     if (randomN > itemstack.stackSize)
+                    {
                         randomN = itemstack.stackSize;
+                    }
                     itemstack.stackSize -= randomN;
                     ItemStack droppedStack = new ItemStack(itemstack.getItem(), randomN, itemstack.getItemDamage());
                     // Copy NBT tag data, needed to preserve Chemist Journal
@@ -154,18 +155,18 @@ public abstract class BasicComplexBlock extends Block implements IBlock
 
         switch (angle)
         {
-        case 0:
-            change = 1;
-            break;
-        case 1:
-            change = 2;
-            break;
-        case 2:
-            change = 0;
-            break;
-        case 3:
-            change = 3;
-            break;
+            case 0:
+                change = 1;
+                break;
+            case 1:
+                change = 2;
+                break;
+            case 2:
+                change = 0;
+                break;
+            case 3:
+                change = 3;
+                break;
         }
         par1World.setBlockMetadataWithNotify(x, y, z, change, 2);
         par1World.notifyBlocksOfNeighborChange(x, y, z, this);
@@ -177,8 +178,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
         try
         {
             return getTileEntityClass().newInstance();
-        }
-        catch (Throwable e)
+        } catch (Throwable e)
         {
             // TODO Auto-generated catch block
             e.printStackTrace();

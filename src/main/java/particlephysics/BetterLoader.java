@@ -1,6 +1,7 @@
 package particlephysics;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import java.util.ArrayList;
 import net.minecraft.block.Block;
 import particlephysics.block.ControlGlassBlock;
 import particlephysics.block.PolarizedGlassBlock;
@@ -8,8 +9,6 @@ import particlephysics.tileentity.emitter.EmitterBlock;
 import particlephysics.tileentity.infiniteemitter.InfiniteEmitterBlock;
 import particlephysics.tileentity.receptor.SeriesReceptorBlock;
 import particlephysics.utility.IBlock;
-
-import java.util.ArrayList;
 
 public class BetterLoader
 {
@@ -46,8 +45,7 @@ public class BetterLoader
                 blocks.add(newBlock);
 
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -66,7 +64,7 @@ public class BetterLoader
                 return currentBlock;
             }
         }
-        
+
         ModParticlePhysics.LOGGER.fatal("Failed to find block in BetterLoader. Crash incoming.");
         return null;
     }
@@ -86,8 +84,7 @@ public class BetterLoader
                 if (currentIBlock.getItemBlock() != null)
                 {
                     GameRegistry.registerBlock(currentBlock, currentIBlock.getItemBlock(), currentIBlock.getName());
-                }
-                else
+                } else
                 {
                     GameRegistry.registerBlock(currentBlock, currentIBlock.getName());
                 }

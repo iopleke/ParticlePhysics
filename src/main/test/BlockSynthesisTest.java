@@ -12,7 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.logging.ILogAgent;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.stats.StatList;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
+import net.minecraft.world.WorldSettings;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.storage.ISaveHandler;
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -28,15 +31,17 @@ import pixlepix.minechem.common.items.ItemTestTube;
 import pixlepix.minechem.common.tileentity.TileEntitySynthesis;
 import pixlepix.minechem.utils.test.EntityItemMatcher;
 
-import static org.junit.Assert.fail;
-
 /**
  * Unit tests for BlockSynthesis (chemical synthesis machine).
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ GameData.class, GameRegistry.class, StatList.class,
-        FMLInjectionData.class, FMLCommonHandler.class, Loader.class })
-public class BlockSynthesisTest {
+@PrepareForTest(
+        {
+            GameData.class, GameRegistry.class, StatList.class,
+            FMLInjectionData.class, FMLCommonHandler.class, Loader.class
+        })
+public class BlockSynthesisTest
+{
 
     private static final int DUMMY_BLOCKID = 4000;
     private static final int DUMMY_JOURNALID = 16000;
@@ -48,19 +53,21 @@ public class BlockSynthesisTest {
 
     private World mockWorld;
     private Loader mockLoader;
-    
+
     private static BlockSynthesis synthesisBlock;
     private static ItemChemistJournal chemistJournalItem;
     private static ItemTestTube testTubeItem;
     private static ItemElement elementItem;
     private static boolean itemsRegistered = false;
     private TileEntitySynthesis synthesisTileEntity;
-    
+
     // Block and item Ids can only be registered once, as they populate
     // a global array. Registration must happen as late as feasible, to ensure
     // that all mock objects are properly configured.
-    private static void registerItems() {
-        if (itemsRegistered) {
+    private static void registerItems()
+    {
+        if (itemsRegistered)
+        {
             return;
         }
         synthesisBlock = new BlockSynthesis(DUMMY_BLOCKID);
@@ -69,27 +76,28 @@ public class BlockSynthesisTest {
         elementItem = new ItemElement(DUMMY_ELEMENTID);
         itemsRegistered = true;
     }
-    
+
     @Before
-    public void setUp() {
+    public void setUp()
+    {
         // Set up static method stubs to avoid having to instantiate all of
         // Minecraft+Forge. Mock setup is particularly icky due to the heavy
         // use of static singletons throughout both Minecraft and Forge;
         // a mix of static mocks, partial mocks, and fakes is needed.
         mockLoader = EasyMock.createMockBuilder(Loader.class)
-            .addMockedMethod("getCallableCrashInformation").createMock();
+                .addMockedMethod("getCallableCrashInformation").createMock();
         PowerMock.mockStaticPartial(Loader.class, "instance");
-        
+
         PowerMock.mockStatic(Loader.class);
         PowerMock.mockStatic(GameData.class);
         PowerMock.mockStaticNice(GameRegistry.class);
         PowerMock.mockStatic(StatList.class);
         PowerMock.mockStatic(FMLInjectionData.class);
-        
+
         EasyMock.expect(Loader.instance()).andReturn(mockLoader);
         ICrashCallable mockCrashCallable = EasyMock.createMock(ICrashCallable.class);
         EasyMock.expect(mockLoader.getCallableCrashInformation()).andReturn(mockCrashCallable);
-        
+
         EasyMock.replay(mockLoader);
         PowerMock.replay(Loader.class);
         FMLCommonHandler mockFMLCommonHandler = EasyMock.createMockBuilder(
@@ -97,47 +105,50 @@ public class BlockSynthesisTest {
                 .addMockedMethod("getCurrentLanguage").createMock();
         EasyMock.expect(mockFMLCommonHandler.getSide()).andReturn(Side.SERVER);
         EasyMock.expect(mockFMLCommonHandler.getCurrentLanguage())
-            .andReturn("en_US").anyTimes();
+                .andReturn("en_US").anyTimes();
         PowerMock.mockStaticPartial(FMLCommonHandler.class, "instance");
         EasyMock.expect(FMLCommonHandler.instance())
-            .andReturn(mockFMLCommonHandler).anyTimes();
+                .andReturn(mockFMLCommonHandler).anyTimes();
         EasyMock.replay(mockFMLCommonHandler);
         PowerMock.replay(FMLCommonHandler.class);
-        
+
         // Expect any number of GameData.newItemAdded calls.
         GameData.newItemAdded(EasyMock.anyObject(Item.class));
         PowerMock.expectLastCall().anyTimes();
-        
-        WorldProvider fakeWorldProvider = new WorldProvider() {
+
+        WorldProvider fakeWorldProvider = new WorldProvider()
+        {
 
             @Override
-            public String getDimensionName() {
+            public String getDimensionName()
+            {
                 return "DummyDimension";
             }
         };
         WorldSettings fakeWorldSettings = new WorldSettings(
                 0L, EnumGameType.SURVIVAL, false, false, WorldType.DEFAULT);
-            
+
         mockWorld = EasyMock.createMockBuilder(World.class)
                 .withConstructor(ISaveHandler.class, String.class,
                         WorldProvider.class, WorldSettings.class,
                         Profiler.class, ILogAgent.class)
-                .withArgs((ISaveHandler) null, "", fakeWorldProvider, 
+                .withArgs((ISaveHandler) null, "", fakeWorldProvider,
                         fakeWorldSettings, (Profiler) null, (ILogAgent) null)
-                        .addMockedMethod("getBlockTileEntity")
-                        .addMockedMethod("removeBlockTileEntity")
-                        .addMockedMethod("spawnEntityInWorld")
-                        .createMock();
+                .addMockedMethod("getBlockTileEntity")
+                .addMockedMethod("removeBlockTileEntity")
+                .addMockedMethod("spawnEntityInWorld")
+                .createMock();
 
         registerItems();
         synthesisTileEntity = new TileEntitySynthesis();
     }
 
     @Test
-    public void testBreakBlockDrops() {
+    public void testBreakBlockDrops()
+    {
 
         EasyMock.expect(mockWorld.getBlockTileEntity(DUMMY_X, DUMMY_Y, DUMMY_Z))
-            .andReturn(synthesisTileEntity);
+                .andReturn(synthesisTileEntity);
         mockWorld.removeBlockTileEntity(DUMMY_X, DUMMY_Y, DUMMY_Z);
         EasyMock.expectLastCall();
 
@@ -147,54 +158,63 @@ public class BlockSynthesisTest {
         chemistJournalItem.addItemStackToJournal(itemstack, journalItemStack,
                 mockWorld);
         boolean[] slotUsed = new boolean[synthesisTileEntity.inventory.length];
-        for (int idx: synthesisTileEntity.kJournal) {
+        for (int idx : synthesisTileEntity.kJournal)
+        {
             synthesisTileEntity.inventory[idx] = journalItemStack;
             slotUsed[idx] = true;
         }
         int nItems = 1;
-        for (int idx: synthesisTileEntity.kBottles) {
+        for (int idx : synthesisTileEntity.kBottles)
+        {
             ItemStack bottles = new ItemStack(testTubeItem, nItems++);
             synthesisTileEntity.inventory[idx] = bottles;
             slotUsed[idx] = true;
         }
         nItems = 1;
-        for (int idx: synthesisTileEntity.kOutput) {
+        for (int idx : synthesisTileEntity.kOutput)
+        {
             ItemStack output = new ItemStack(Item.flint, nItems);
             synthesisTileEntity.inventory[idx] = output;
             slotUsed[idx] = true;
         }
         nItems = 1;
-        for (int idx: synthesisTileEntity.kRecipe) {
+        for (int idx : synthesisTileEntity.kRecipe)
+        {
             ItemStack recipeInput = new ItemStack(elementItem, nItems,
                     EnumElement.C.ordinal());
             synthesisTileEntity.inventory[idx] = recipeInput;
             slotUsed[idx] = true;
         }
         nItems = 1;
-        for (int idx: synthesisTileEntity.kStorage) {
+        for (int idx : synthesisTileEntity.kStorage)
+        {
             ItemStack storedItem = new ItemStack(elementItem, nItems,
                     EnumElement.H.ordinal());
             synthesisTileEntity.inventory[idx] = storedItem;
             slotUsed[idx] = true;
         }
-        
+
         // All slots must be populated for the test to be valid.
-        for (int idx = 0; idx < slotUsed.length; idx++) {
-            if (!slotUsed[idx]) {
+        for (int idx = 0; idx < slotUsed.length; idx++)
+        {
+            if (!slotUsed[idx])
+            {
                 fail("Inventory slot " + idx + " not populated by test");
             }
         }
-        
+
         // Only "real" slots should have their contents spawned in the world.
-        for (int idx: synthesisTileEntity.kRealSlots) {
-            if (synthesisTileEntity.isGhostSlot(idx)) {
+        for (int idx : synthesisTileEntity.kRealSlots)
+        {
+            if (synthesisTileEntity.isGhostSlot(idx))
+            {
                 fail("Inventory slot " + idx + " is a ghost slot but in real list");
             }
             EasyMock.expect(mockWorld.spawnEntityInWorld(
                     EntityItemMatcher.eqEntityItem(
                             synthesisTileEntity.inventory[idx]))).andReturn(true);
         }
-        
+
         PowerMock.replay(GameData.class, GameRegistry.class, StatList.class,
                 FMLInjectionData.class, FMLCommonHandler.class);
         EasyMock.replay(mockWorld);

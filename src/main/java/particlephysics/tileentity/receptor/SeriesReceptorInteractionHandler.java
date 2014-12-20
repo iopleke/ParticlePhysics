@@ -18,9 +18,11 @@ public class SeriesReceptorInteractionHandler
             {
                 SeriesReceptorTileEntity receptor = (SeriesReceptorTileEntity) te;
                 if (event.entityPlayer != null && event.entityPlayer instanceof EntityPlayerMP)
-                event.entityPlayer.addChatComponentMessage(
-                        new ChatComponentText("Stored power: " + receptor.getEnergyStored(null) + "/" + receptor.getMaxEnergyStored(null) + "RF")
-                );
+                {
+                    event.entityPlayer.addChatComponentMessage(
+                            new ChatComponentText("Stored power: " + receptor.getEnergyStored(null) + "/" + receptor.getMaxEnergyStored(null) + "RF")
+                    );
+                }
             }
         }
     }

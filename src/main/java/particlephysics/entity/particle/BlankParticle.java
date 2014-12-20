@@ -1,8 +1,7 @@
 package particlephysics.entity.particle;
 
-import net.minecraft.world.World;
-
 import java.lang.reflect.InvocationTargetException;
+import net.minecraft.world.World;
 
 public class BlankParticle extends TemplateParticle
 {
@@ -33,28 +32,22 @@ public class BlankParticle extends TemplateParticle
             try
             {
                 blankParticle = particle.getClass().getConstructor(World.class).newInstance(worldObj);
-            }
-            catch (InstantiationException e)
+            } catch (InstantiationException e)
             {
                 e.printStackTrace();
-            }
-            catch (IllegalAccessException e)
+            } catch (IllegalAccessException e)
             {
                 e.printStackTrace();
-            }
-            catch (IllegalArgumentException e)
+            } catch (IllegalArgumentException e)
             {
                 e.printStackTrace();
-            }
-            catch (InvocationTargetException e)
+            } catch (InvocationTargetException e)
             {
                 e.printStackTrace();
-            }
-            catch (NoSuchMethodException e)
+            } catch (NoSuchMethodException e)
             {
                 e.printStackTrace();
-            }
-            catch (SecurityException e)
+            } catch (SecurityException e)
             {
                 e.printStackTrace();
             }

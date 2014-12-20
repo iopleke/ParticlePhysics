@@ -22,8 +22,8 @@ public class GUIHandler implements IGuiHandler
     {
         switch (ID)
         {
-        case 0:
-            return new EmitterContainer(player.inventory, (EmitterTileEntity) world.getTileEntity(x, y, z));
+            case 0:
+                return new EmitterContainer(player.inventory, (EmitterTileEntity) world.getTileEntity(x, y, z));
         }
         return null;
     }
@@ -33,8 +33,8 @@ public class GUIHandler implements IGuiHandler
     {
         switch (ID)
         {
-        case 0:
-            return new EmitterGUI(player.inventory, (EmitterTileEntity) world.getTileEntity(x, y, z));
+            case 0:
+                return new EmitterGUI(player.inventory, (EmitterTileEntity) world.getTileEntity(x, y, z));
         }
         return null;
     }

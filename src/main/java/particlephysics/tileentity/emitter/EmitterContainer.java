@@ -35,10 +35,10 @@ public class EmitterContainer extends Container
 
         // Add active fuel slot
         addSlotToContainer(new EmitterFuelSlot(machine, 0, 8, 73));
-        
+
         // Extra fuel container slots
-        // Change this to 9 eventually? 
-        // Throws arrayoutofbounds on existing TEs. 
+        // Change this to 9 eventually?
+        // Throws arrayoutofbounds on existing TEs.
         for (int x = 0; x < 6; x++)
         {
             addSlotToContainer(new EmitterFuelSlot(machine, 1 + x, 8 + 18 * x, 111));
@@ -156,8 +156,7 @@ public class EmitterContainer extends Container
         {
             this.oldFuelType = machine.fuelType.getItem();
             this.oldFuelMeta = machine.fuelType.getItemDamage();
-        }
-        else
+        } else
         {
             this.oldFuelType = null;
             this.oldFuelMeta = -1;

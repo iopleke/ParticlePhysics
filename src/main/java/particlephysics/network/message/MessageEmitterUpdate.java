@@ -23,6 +23,7 @@ public class MessageEmitterUpdate implements IMessage, IMessageHandler<MessageEm
         this.type = type;
         this.value = value;
     }
+
     @Override
     public void fromBytes(ByteBuf buf)
     {

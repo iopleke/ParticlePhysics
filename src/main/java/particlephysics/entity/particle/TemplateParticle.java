@@ -1,5 +1,8 @@
 package particlephysics.entity.particle;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,10 +19,6 @@ import particlephysics.ParticleRegistry;
 import particlephysics.api.IParticleBouncer;
 import particlephysics.api.IParticleReceptor;
 import particlephysics.utility.BlockRenderInfo;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public abstract class TemplateParticle extends EntityLivingBase
 {
@@ -81,8 +80,7 @@ public abstract class TemplateParticle extends EntityLivingBase
             this.motionZ = targetDirection.offsetZ * f;
             this.onBounceHook(x, y, z);
 
-        }
-        else
+        } else
         {
             this.setDead();
         }
@@ -171,8 +169,7 @@ public abstract class TemplateParticle extends EntityLivingBase
             if (block == Blocks.glass || isReflective)
             {
                 this.bounce(targetX, targetY, targetZ, forward);
-            }
-            else
+            } else
             {
                 // Polarized glass
                 // Magic numbers are fun!
@@ -180,8 +177,7 @@ public abstract class TemplateParticle extends EntityLivingBase
                 if (entity instanceof IParticleReceptor)
                 {
                     ((IParticleReceptor) entity).onContact(this);
-                }
-                else
+                } else
                 {
                     this.setDead();
                 }
@@ -285,8 +281,7 @@ public abstract class TemplateParticle extends EntityLivingBase
             if (this.onGround)
             {
                 f4 = this.getAIMoveSpeed() * f3;
-            }
-            else
+            } else
             {
                 f4 = this.jumpMovementFactor;
             }

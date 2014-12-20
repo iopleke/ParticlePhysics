@@ -36,7 +36,9 @@ public class SeriesReceptorTileEntity extends TileEnergyHandler implements IPart
                 {
                     IEnergyHandler other = (IEnergyHandler) te;
                     if (other.canConnectEnergy(dir.getOpposite()))
+                    {
                         this.storage.modifyEnergyStored(-1 * other.receiveEnergy(dir.getOpposite(), this.getEnergyStored(null), false));
+                    }
                 }
             }
         }
