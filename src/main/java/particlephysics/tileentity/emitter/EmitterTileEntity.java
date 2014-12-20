@@ -338,12 +338,15 @@ public class EmitterTileEntity extends TileEntity implements IInventory
     {
         int damage = this.fuelType == null ? 0 : this.fuelType.getItemDamage();
         int stackSize = this.fuelType == null ? 0 : this.fuelType.stackSize;
-        if (id == 1)
+        if (this.fuelType != null)
         {
-            this.fuelType = value == 0 ? null : new ItemStack(Item.getItemById(value), stackSize, damage);
-        } else if (id == 2)
-        {
-            this.fuelType = new ItemStack(this.fuelType.getItem(), stackSize, value);
+            if (id == 1)
+            {
+                this.fuelType = value == 0 ? null : new ItemStack(Item.getItemById(value), stackSize, damage);
+            } else if (id == 2)
+            {
+                this.fuelType = new ItemStack(this.fuelType.getItem(), stackSize, value);
+            }
         }
     }
 }
