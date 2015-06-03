@@ -12,15 +12,15 @@ buildscript {
         }
     }
     dependencies {
-    classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'de.undercouch:gradle-download-task:1.2'
     }
 }
 
-apply plugin: 'scala'
 apply plugin: 'forge'
-apply plugin: 'idea'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
+apply plugin: 'de.undercouch.download'
 
 ext.buildProps = file "build.properties"
 
@@ -103,9 +103,24 @@ allprojects {
     }
 }
 
-task copyBuildXml(type: Copy) {
-    from 'build.properties'
-    into 'output'
+import de.undercouch.gradle.tasks.download.Download
+
+task getLibraries {
+    def libsFolder = new File('libs')
+    if (!libsFolder.isDirectory() ) {
+        libsFolder.mkdirs()
+    }
+
+    def cofhSource = 'http://minecraft.curseforge.com/mc-mods/220333-cofhlib/files/2236777/download'
+    def cofhDest = new File('libs', 'CoFHLib-1.7.10-1.0.2-160-dev.jar')
+
+    if(!cofhDest.exists() ){
+        download {
+            src cofhSource
+            dest cofhDest
+        }
+    }
+
 }
 
-build.dependsOn "copyBuildXml"
+build.dependsOn "getLibraries"
