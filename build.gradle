@@ -23,7 +23,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 ext.buildProps = file "build.properties"
- 
+
 buildProps.withReader {
     def prop = new Properties()
     prop.load(it)
@@ -45,10 +45,9 @@ repositories {
     }
 }
 
-dependencies {    
+dependencies {
     compile group: 'codechicken', name: 'NotEnoughItems', version: "${config.version.minecraft}-${config.version.nei}", ext: 'jar', classifier: "dev"
     compile group: 'codechicken', name: 'CodeChickenCore', version: "${config.version.minecraft}-${config.version.cccore}", ext: 'jar', classifier: "dev"
-    compile group: 'codechicken', name: 'CodeChickenLib', version: "${config.version.minecraft}-${config.version.cclib}", ext: 'jar', classifier: "dev"
 }
 
 group = "particlephysics"
@@ -56,12 +55,12 @@ archivesBaseName = "ParticlePhysics"
 
 minecraft {
     version = "${config.version.minecraft}-${config.version.forge}"
-    
+
     replaceIn "AlchemyPlusPlus.java"
     replace "@MAJOR@", config.version.mod.major
     replace "@MINOR@", config.version.mod.minor
     replace "@REVIS@", config.version.mod.revis
-    
+
     if (System.getenv("BUILD_NUMBER") != null) {
         replace "@BUILD@", System.getenv("BUILD_NUMBER")
     }
@@ -77,18 +76,18 @@ processResources {
 
 allprojects {
     version = "${config.version.minecraft}-${config.version.mod.major}.${config.version.mod.minor}.${config.version.mod.revis}"
-    
+
     if (System.getenv("BUILD_NUMBER") != null) {
         version += ".${System.getenv("BUILD_NUMBER")}"
     } else {
         version += "-ManuallyBuilt"
     }
-    
+
     jar {
         dependsOn ":copyBuildXml"
         destinationDir = file (rootProject.getRootDir().getPath() + '/output')
     }
-    
+
     publishing {
         publications {
             mavenJava(MavenPublication) {
@@ -102,7 +101,7 @@ allprojects {
         }
     }
 }
- 
+
 task copyBuildXml(type: Copy) {
     from 'build.properties'
     into 'output'
