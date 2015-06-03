@@ -49,7 +49,7 @@ public class ParticleRegistry
 
         for (int i = 0; i < particles.size(); i++)
         {
-            IIcon particleIcon = register.registerIcon(ModParticlePhysics.ID + ":" + particles.get(i).getName().substring("particlephysics.entity.particle.".length()));
+            IIcon particleIcon = register.registerIcon(ParticlePhysics.ID + ":" + particles.get(i).getName().substring("particlephysics.entity.particle.".length()));
             icons.put(particles.get(i), particleIcon);
         }
 
@@ -74,7 +74,7 @@ public class ParticleRegistry
         {
             try
             {
-                EntityRegistry.registerModEntity(particles.get(i), particles.get(i).getName(), i, ModParticlePhysics.INSTANCE, 80, 1, true);
+                EntityRegistry.registerModEntity(particles.get(i), particles.get(i).getName(), i, ParticlePhysics.INSTANCE, 80, 1, true);
 
             } catch (SecurityException e)
             {

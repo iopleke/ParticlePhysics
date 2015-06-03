@@ -21,7 +21,7 @@ public class Settings
     @SubscribeEvent
     public void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
     {
-        if (event.modID.equalsIgnoreCase(ModParticlePhysics.ID))
+        if (event.modID.equalsIgnoreCase(ParticlePhysics.ID))
         {
             loadConfig();
         }

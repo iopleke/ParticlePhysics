@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import particlephysics.BetterLoader;
-import particlephysics.ModParticlePhysics;
+import particlephysics.ParticlePhysics;
 import particlephysics.tileentity.emitter.EmitterBlock;
 import particlephysics.utility.BasicComplexBlock;
 
@@ -106,7 +106,7 @@ public class InfiniteEmitterBlock extends BasicComplexBlock
         TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof InfiniteEmitterTileEntity)
         {
-            entityPlayer.openGui(ModParticlePhysics.INSTANCE, 0, world, x, y, z);
+            entityPlayer.openGui(ParticlePhysics.INSTANCE, 0, world, x, y, z);
             return true;
         }
         return false;

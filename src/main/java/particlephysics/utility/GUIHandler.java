@@ -4,7 +4,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import particlephysics.ModParticlePhysics;
+import particlephysics.ParticlePhysics;
 import particlephysics.tileentity.emitter.EmitterContainer;
 import particlephysics.tileentity.emitter.EmitterGUI;
 import particlephysics.tileentity.emitter.EmitterTileEntity;
@@ -14,7 +14,7 @@ public class GUIHandler implements IGuiHandler
 
     public GUIHandler()
     {
-        NetworkRegistry.INSTANCE.registerGuiHandler(ModParticlePhysics.INSTANCE, this);
+        NetworkRegistry.INSTANCE.registerGuiHandler(ParticlePhysics.INSTANCE, this);
     }
 
     @Override

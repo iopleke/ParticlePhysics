@@ -6,12 +6,12 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
-import particlephysics.ModParticlePhysics;
+import particlephysics.ParticlePhysics;
 import particlephysics.network.message.MessageEmitterUpdate;
 
 public class MessageHandler implements IMessageHandler
 {
-    public static final SimpleNetworkWrapper INSATNCE = NetworkRegistry.INSTANCE.newSimpleChannel(ModParticlePhysics.ID);
+    public static final SimpleNetworkWrapper INSATNCE = NetworkRegistry.INSTANCE.newSimpleChannel(ParticlePhysics.ID);
 
     public static void init()
     {

@@ -40,7 +40,7 @@ public class BetterLoader
                 Block newBlock = ((Block) clazz.newInstance()).setHardness(0.5F).setStepSound(Block.soundTypeAnvil);
                 if (((IBlock) newBlock).inCreativeTab())
                 {
-                    newBlock.setCreativeTab(ModParticlePhysics.CREATIVE_TAB);
+                    newBlock.setCreativeTab(ParticlePhysics.CREATIVE_TAB);
                 }
                 blocks.add(newBlock);
 
@@ -65,7 +65,7 @@ public class BetterLoader
             }
         }
 
-        ModParticlePhysics.LOGGER.fatal("Failed to find block in BetterLoader. Crash incoming.");
+        ParticlePhysics.LOGGER.fatal("Failed to find block in BetterLoader. Crash incoming.");
         return null;
     }
 

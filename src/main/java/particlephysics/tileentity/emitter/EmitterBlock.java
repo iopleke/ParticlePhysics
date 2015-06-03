@@ -9,7 +9,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import particlephysics.ModParticlePhysics;
+import particlephysics.ParticlePhysics;
 import particlephysics.ParticleRegistry;
 import particlephysics.utility.BasicComplexBlock;
 
@@ -100,7 +100,7 @@ public class EmitterBlock extends BasicComplexBlock
         TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof EmitterTileEntity)
         {
-            entityPlayer.openGui(ModParticlePhysics.INSTANCE, 0, world, x, y, z);
+            entityPlayer.openGui(ParticlePhysics.INSTANCE, 0, world, x, y, z);
             return true;
         }
         return false;

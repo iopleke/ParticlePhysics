@@ -16,7 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import particlephysics.ModParticlePhysics;
+import particlephysics.ParticlePhysics;
 import particlephysics.proxy.ClientProxy;
 
 public abstract class BasicComplexBlock extends Block implements IBlock
@@ -25,7 +25,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
     public IIcon connectorIcon;
     public IIcon topIcon;
     static int blockIdIncrement;
-    public String textureBase = ModParticlePhysics.ID + ":";
+    public String textureBase = ParticlePhysics.ID + ":";
 
     public abstract String getFront();
 
@@ -183,7 +183,7 @@ public abstract class BasicComplexBlock extends Block implements IBlock
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        ModParticlePhysics.LOGGER.fatal("Error while creating tile entity");
+        ParticlePhysics.LOGGER.fatal("Error while creating tile entity");
         return null;
 
     }

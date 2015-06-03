@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
-import particlephysics.ModParticlePhysics;
+import particlephysics.ParticlePhysics;
 
 @SideOnly(Side.CLIENT)
 public class ModelParticle extends ModelBase
@@ -21,7 +21,7 @@ public class ModelParticle extends ModelBase
 
     public ModelParticle()
     {
-        model = AdvancedModelLoader.loadModel(new ResourceLocation(ModParticlePhysics.ID, "/particle.obj"));
+        model = AdvancedModelLoader.loadModel(new ResourceLocation(ParticlePhysics.ID, "/particle.obj"));
     }
 
     private void render()
