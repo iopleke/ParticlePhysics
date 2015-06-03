@@ -85,7 +85,6 @@ allprojects {
     }
 
     jar {
-        dependsOn ":copyBuildXml"
         destinationDir = file (rootProject.getRootDir().getPath() + '/output')
     }
 
