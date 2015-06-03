@@ -54,7 +54,7 @@ group = "particlephysics"
 archivesBaseName = "ParticlePhysics"
 
 minecraft {
-    version = "${config.version.minecraft}-${config.version.forge}"
+    version = "${config.version.forge}-${config.version.minecraft}"
 
     replaceIn "AlchemyPlusPlus.java"
     replace "@MAJOR@", config.version.mod.major
