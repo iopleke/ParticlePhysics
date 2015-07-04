@@ -41,6 +41,7 @@ build.xml
 /nbproject/private/
 /nbbuild/
 lib/
+libs/
 output/
 gradlew
 gradlew.bat
