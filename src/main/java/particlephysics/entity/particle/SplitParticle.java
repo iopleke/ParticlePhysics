@@ -42,7 +42,7 @@ public class SplitParticle extends TemplateParticle
             {
                 ConcentratedParticle produce = new ConcentratedParticle(this.worldObj);
                 produce.setPosition(this.posX, this.posY, this.posZ);
-                produce.setVelocity(0, 1, 0);
+                produce.addVelocity(0, 1, 0);
                 worldObj.spawnEntityInWorld(produce);
 
                 particle.setDead();

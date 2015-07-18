@@ -37,7 +37,7 @@ public class PaperParticle extends TemplateParticle
 
             blankParticle.setPosition(this.posX, this.posY, this.posZ);
 
-            blankParticle.setVelocity(this.motionX, this.motionY, this.motionZ);
+            blankParticle.addVelocity(this.motionX, this.motionY, this.motionZ);
 
             blankParticle.movementDirection = this.movementDirection;
             worldObj.spawnEntityInWorld(blankParticle);

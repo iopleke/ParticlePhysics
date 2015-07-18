@@ -46,7 +46,7 @@ public class SandParticle extends TemplateParticle
         SandParticle reflectedParticle = new SandParticle(this.worldObj);
         reflectedParticle.genLeft = this.genLeft;
         ForgeDirection dir = this.movementDirection;
-        reflectedParticle.setVelocity(dir.offsetX, dir.offsetY, dir.offsetZ);
+        reflectedParticle.addVelocity(dir.offsetX, dir.offsetY, dir.offsetZ);
         reflectedParticle.setPosition(this.posX, this.posY, this.posZ);
         worldObj.spawnEntityInWorld(reflectedParticle);
     }
