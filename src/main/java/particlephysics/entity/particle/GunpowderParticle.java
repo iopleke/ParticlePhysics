@@ -48,8 +48,8 @@ public class GunpowderParticle extends TemplateParticle
         GunpowderParticle produce = new GunpowderParticle(worldObj);
         produce.potential = particle.potential;
         produce.setPosition(particle.posX, particle.posY, particle.posZ);
-        produce.setVelocity(particle.motionX, particle.motionY, particle.motionZ);
-        // this.setVelocity(this.motionX*-1, this.motionY*-1,this.motionZ*-1);
+        produce.addVelocity(particle.motionX, particle.motionY, particle.motionZ);
+        // this.addVelocity(this.motionX*-1, this.motionY*-1,this.motionZ*-1);
         worldObj.spawnEntityInWorld(produce);
         particle.setDead();
     }

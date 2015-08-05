@@ -45,11 +45,11 @@ public class ClayParticle extends TemplateParticle
             {
                 SplitParticle coalDerived = new SplitParticle(worldObj);
                 coalDerived.setPosition(particle.posX, particle.posY, particle.posZ);
-                coalDerived.setVelocity(particle.motionX, particle.motionY, particle.motionZ);
+                coalDerived.addVelocity(particle.motionX, particle.motionY, particle.motionZ);
                 SplitParticle lapisDerived = new SplitParticle(worldObj);
 
                 lapisDerived.setPosition(this.posX, this.posY, this.posZ);
-                lapisDerived.setVelocity(this.motionX, this.motionY, this.motionZ);
+                lapisDerived.addVelocity(this.motionX, this.motionY, this.motionZ);
                 coalDerived.setPartner(lapisDerived);
                 lapisDerived.setPartner(coalDerived);
                 lapisDerived.movementDirection = this.movementDirection;
@@ -57,8 +57,9 @@ public class ClayParticle extends TemplateParticle
                 worldObj.spawnEntityInWorld(coalDerived);
                 worldObj.spawnEntityInWorld(lapisDerived);
             }
-            this.setVelocity(0, 0, 0);
-            particle.setVelocity(0, 0, 0);
+            //stop the original particles by adding inverse of their current velocity
+            this.addVelocity(-this.motionX, -this.motionY, -this.motionZ);
+            particle.addVelocity(-particle.motionX, -particle.motionY, -particle.motionZ);
             particle.setDead();
             this.setDead();
 
