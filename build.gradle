@@ -103,6 +103,15 @@ allprojects {
     }
 }
 
+sourceSets {
+    main {
+        resources {
+            exclude '**/xcf/*'
+            exclude 'resources/assets/particlephysics/xcf'
+        }
+    }
+}
+
 import de.undercouch.gradle.tasks.download.Download
 
 task getLibraries {
